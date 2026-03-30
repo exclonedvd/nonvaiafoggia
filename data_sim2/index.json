@@ -4,6 +4,10 @@
     {
       "name": "EOR",
       "file": "EOR.json"
+    },
+    {
+      "name": "PAR ICCS",
+      "file": "PAR.json"
     }
   ]
 }
