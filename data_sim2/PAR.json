@@ -1,0 +1,92 @@
+[
+  {
+    "question": "Che cosa significa l’acronimo E.O.D.?",
+    "answers": [
+      "Disarmo Ordigni Esplosivi.",
+      "Disattivazione “bonifica” Ordigni Esplosivi.",
+      "Dispersione Ordigni Esplosivi."
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Che cosa significa l’acronimo UXO?",
+    "answers": [
+      "UneXploded Object / Oggetto inesploso.",
+      "UneXploded explosive Ordnance / Ordigno inesploso.",
+      "UneXplosive Ordinances / Ordigni esplosivi."
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Qual è il compito principale delle Squadre EOR?",
+    "answers": [
+      "La disattivazione di IED.",
+      "Il riconoscimento di un UXO.",
+      "La disattivazione di un UXO."
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Quali sono i compiti degli assessment team (squadre di valutazione)?",
+    "answers": [
+      "Fornire un accurato riporto dei danni e dei pericoli presenti nell’area/zona di propria competenza.",
+      "Effettuare quanto previsto da ICCS.",
+      "Mettere in essere quanto previsto dal piano."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Che cosa si intende per DETONAZIONE?",
+    "answers": [
+      "È un fenomeno di violenta decomposizione di un esplosivo e si ottiene quando la velocità della reazione è compresa tra 1000 e 9000 m/sec.",
+      "È un fenomeno in cui avviene la decomposizione di un esplosivo alla velocità compresa tra 400 e 1000 m/sec.",
+      "È quando una munizione è pronta allo scoppio."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Cosa si intende per IED?",
+    "answers": [
+      "Ordigno, posizionato o assemblato in maniera improvvisata, che contiene elementi distruttivi, letali, nocivi, pirotecnici o incendiari ed è destinato a distruggere, inabilitare, molestare o turbare.",
+      "Ordigno esplosivo assemblato, spolettato o comunque allestito per il funzionamento che rimane inesploso dopo essere stato impiegato.",
+      "La detection, l’identificazione, la valutazione sul posto e la disattivazione di UXO."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Che cosa significa l’acronimo E.O.R.?",
+    "answers": [
+      "Ritrovamento Ordigni Esplosivi.",
+      "Riconoscimento Ordigni Esplosivi.",
+      "Rastrellamento Ordigni Esplosivi."
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Quali sono gli effetti di un’esplosione?",
+    "answers": [
+      "Effetto luminoso, termico e meccanico.",
+      "Effetto dirompente e di frammentazione.",
+      "Effetto meccanico, dirompente e termico."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Chi è responsabile di effettuare l’identificazione di un UXO-IED?",
+    "answers": [
+      "Solo il personale qualificato EOR è in grado di effettuare l’identificazione.",
+      "Tutto il personale deve essere in grado di distinguere un oggetto pericoloso (UXO/IED) e stabilirne il relativo grado di pericolo.",
+      "Team EOD per UXO e team IEDD per IED."
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Che cosa significa l’acronimo I.E.D.?",
+    "answers": [
+      "Dispositivo esplosivo intelligente.",
+      "Ordigno esplosivo ionizzante.",
+      "Dispositivo esplosivo improvvisato."
+    ],
+    "correctIndex": 2
+  }
+]
