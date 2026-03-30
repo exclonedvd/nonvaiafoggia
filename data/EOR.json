@@ -1,0 +1,605 @@
+[
+  {
+    "question": "Lo scopo principale del manuale è:",
+    "answers": [
+      "fornire una guida al personale addetto al riconoscimento ordigni esplosivi",
+      "sostituire integralmente l’attività delle squadre EOD",
+      "descrivere solo la storia degli ordigni bellici"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Secondo la premessa, il riconoscimento EOR implica:",
+    "answers": [
+      "il contatto diretto con l’ordigno per verificarne la stabilità",
+      "solo il rilevamento di dati oggettivi senza contatto con l’ordigno",
+      "la neutralizzazione immediata sul posto"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "L’acronimo UXO indica:",
+    "answers": [
+      "un ordigno esplosivo inesploso",
+      "un ordigno da esercitazione",
+      "un dispositivo di protezione individuale"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "UXB indica:",
+    "answers": [
+      "un UXO interrato",
+      "un UXO già bonificato",
+      "un residuato bellico navale"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "ERW significa:",
+    "answers": [
+      "Emergency Response Warning",
+      "Explosive Remains of War",
+      "External Recovery Work"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "HME nel manuale corrisponde a:",
+    "answers": [
+      "High Mechanical Effect",
+      "Home Made Explosive",
+      "Hazard Mitigation Equipment"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "EOR significa:",
+    "answers": [
+      "riconoscimento ordigni esplosivi",
+      "evacuazione ordigni regolamentari",
+      "eliminazione ostacoli rapidi"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "EOD indica:",
+    "answers": [
+      "una sola attività amministrativa",
+      "il settore della disattivazione di ordigni esplosivi",
+      "esclusivamente la segnalazione al comando"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "CMD riguarda:",
+    "answers": [
+      "la disattivazione di munizionamento convenzionale",
+      "il coordinamento medico d’emergenza",
+      "il controllo delle mine navali"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "IEDD riguarda:",
+    "answers": [
+      "la distruzione delle infrastrutture colpite",
+      "la disattivazione di dispositivi esplosivi improvvisati",
+      "la classificazione dei crateri"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "BCMD integra capacità dedicate a ordigni:",
+    "answers": [
+      "biologici e chimici",
+      "balistici e convenzionali",
+      "bellici e campali"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "L’EOD SO è:",
+    "answers": [
+      "un ufficiale supervisore delle attività EOD",
+      "un addetto al trasporto sanitario",
+      "un tecnico antincendio di reparto"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "L’IC è:",
+    "answers": [
+      "il comandante responsabile dell’incidente/evento EOD",
+      "il capo della pattuglia di sorveglianza esterna",
+      "il responsabile del solo traffico radio"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "L’ICP è:",
+    "answers": [
+      "il piano di classificazione prioritaria",
+      "il punto di controllo dell’incidente/evento",
+      "il posto di caricamento protetto"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "L’OSC è inizialmente:",
+    "answers": [
+      "il responsabile dell’area interessata che coordina la risposta iniziale",
+      "il medico più vicino al luogo dell’evento",
+      "l’addetto alla compilazione del worksheet"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Un incidente EOD di categoria A costituisce una minaccia:",
+    "answers": [
+      "lieve",
+      "grave e immediata",
+      "non attuale"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "La categoria D è assegnata a incidenti che:",
+    "answers": [
+      "hanno priorità assoluta",
+      "costituiscono minaccia indiretta",
+      "al momento non costituiscono una minaccia"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "question": "La priorità 1 richiede che il team EOD si muova:",
+    "answers": [
+      "entro 7 giorni",
+      "il più velocemente possibile",
+      "solo dopo completamento del worksheet"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "La priorità 4 prevede, in generale, risoluzione del task entro:",
+    "answers": [
+      "7 giorni",
+      "24 ore",
+      "12 ore"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Tra i compiti del personale EOR rientra:",
+    "answers": [
+      "investigazione",
+      "brillamento autonomo",
+      "costruzione di sistemi d’innesco"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Nella fase di investigazione, i testimoni dovrebbero essere ascoltati:",
+    "answers": [
+      "tutti insieme per uniformare il racconto",
+      "separatamente",
+      "solo dopo l’arrivo del team EOD"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Le “5 Ws” citate nel manuale comprendono:",
+    "answers": [
+      "Where, What, When, Was, Why",
+      "Who, Weapon, Width, Warning, Why",
+      "When, Wire, Weight, Where, What"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Dopo un riporto verbale, la squadra EOR deve:",
+    "answers": [
+      "sospendere ogni ulteriore comunicazione",
+      "produrre anche un rapporto scritto",
+      "attendere sempre il nullaosta sanitario"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Segnalare sul terreno la presenza di un UXO è importante soprattutto per:",
+    "answers": [
+      "la sicurezza del personale operante",
+      "accelerare il brillamento",
+      "stabilire la provenienza nazionale dell’ordigno"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Tra i requisiti minimi del personale EOR rientra la capacità di:",
+    "answers": [
+      "distinguere oggetti esplosivi da non esplosivi",
+      "effettuare demolizioni speciali",
+      "progettare sistemi di spolette"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il manuale definisce “esplosivo” come:",
+    "answers": [
+      "una sostanza che reagisce solo in presenza d’acqua",
+      "una sostanza, miscela o miscuglio che sotto adeguata causa esterna dà luogo a reazione esplosiva",
+      "un materiale che produce soltanto effetti luminosi"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "L’esplosione è descritta come reazione:",
+    "answers": [
+      "lenta, endotermica e senza gas",
+      "rapidissima, esotermica, con produzione di gas e pressione ad alta temperatura",
+      "meccanica e priva di effetti acustici"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "La “catena esplosiva” è:",
+    "answers": [
+      "una sequenza di esplosioni dal più sensibile al più sordo",
+      "una rete logistica di trasporto munizioni",
+      "una classificazione dei residuati bellici"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "La combustione semplice, nel manuale, non è considerata una vera esplosione perché:",
+    "answers": [
+      "avviene solo sott’acqua",
+      "la trasformazione in gas avviene lentamente e senza aumenti significativi di pressione",
+      "richiede sempre detonatori multipli"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "La deflagrazione è tipica:",
+    "answers": [
+      "degli esplosivi da lancio",
+      "solo delle submunizioni",
+      "esclusivamente dei residuati bellici"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "La detonazione è caratterizzata da:",
+    "answers": [
+      "reazione lenta a pressione atmosferica",
+      "fenomeno rapidissimo con onda di detonazione",
+      "assenza di onda d’urto"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "In base all’impiego, gli esplosivi sono distinti nel manuale in:",
+    "answers": [
+      "difensivi, offensivi e logistici",
+      "da lancio, da scoppio, da innesco",
+      "primari, strategici, tattici"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "In base alla velocità di esplosione, i bassi esplosivi hanno velocità:",
+    "answers": [
+      "inferiore a 1000 m/sec",
+      "compresa sempre tra 5000 e 9000 m/sec",
+      "uguale a quella del suono"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Gli esplosivi primari sono:",
+    "answers": [
+      "poco sensibili e sempre secondari",
+      "molto sensibili all’innesco",
+      "utilizzati solo per effetto incendiario"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Gli esplosivi secondari, in generale:",
+    "answers": [
+      "detonano senza bisogno di alcun innesco",
+      "hanno generalmente bisogno di essere innescati da un esplosivo primario",
+      "non possono essere classificati"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Gli effetti dell’esplosione dipendono soprattutto:",
+    "answers": [
+      "soltanto dal colore dell’ordigno",
+      "dalla quantità di esplosivo e dal luogo dell’esplosione",
+      "unicamente dalla stagione climatica"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "L’onda esplosiva viene distinta in:",
+    "answers": [
+      "fase rossa, gialla e blu",
+      "onda positiva, neutra e negativa",
+      "fase magnetica, elettrica e meccanica"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Se l’esplosione avviene sotto il terreno, gran parte dei danni è dovuta:",
+    "answers": [
+      "solo agli effetti ottici",
+      "allo scuotimento del terreno",
+      "esclusivamente alla perdita di colore dell’involucro"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Un chiaro segno dell’esplosione è:",
+    "answers": [
+      "la presenza di schegge",
+      "la totale assenza di frammenti",
+      "la sola variazione di temperatura dell’aria"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Una cavità sotterranea prodotta da esplosione profonda, senza cratere visibile, è chiamata:",
+    "answers": [
+      "corrugamento",
+      "camouflet",
+      "governale"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Il capitolo 3 del manuale tratta:",
+    "answers": [
+      "la classificazione degli ordigni esplosivi",
+      "la sola storia delle campagne aeree",
+      "esclusivamente le comunicazioni radio"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Tra le grandi famiglie trattate nel capitolo 3 compaiono:",
+    "answers": [
+      "submunizioni, mine e spolette",
+      "uniformi, mezzi corazzati e radar",
+      "viveri, carburanti e ricambi"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il capitolo 4 è dedicato principalmente a:",
+    "answers": [
+      "ordigni interrati",
+      "normative amministrative NATO",
+      "solo incendi infrastrutturali"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Nel capitolo 4 compare anche il tema della:",
+    "answers": [
+      "delimitazione dell’area di immediato pericolo",
+      "costruzione artigianale di sistemi di innesco",
+      "taratura dei detonatori"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "In termini generali, un UXB è:",
+    "answers": [
+      "un UXO interrato e non semplicemente parzialmente visibile",
+      "un ordigno già inertizzato",
+      "una mina navale recuperata"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Le precauzioni di sicurezza servono ad aiutare il personale EOR a:",
+    "answers": [
+      "determinare i pericoli associati all’UXO e i comportamenti da adottare",
+      "scegliere il metodo di neutralizzazione",
+      "sostituire la valutazione dei rischi"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il manuale distingue le precauzioni di sicurezza in:",
+    "answers": [
+      "tre gruppi numerici rigidi",
+      "due gruppi principali",
+      "una sola lista senza differenze"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Tra le precauzioni generali compare il principio di:",
+    "answers": [
+      "approccio sopravento",
+      "avvicinamento sottovento obbligatorio",
+      "uso prioritario di mezzi rumorosi"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Una regola generale chiaramente indicata è:",
+    "answers": [
+      "toccare l’ordigno solo con guanti isolanti",
+      "non toccare mai un UXO",
+      "spostare l’ordigno in zona libera"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Il manuale raccomanda di esporsi all’UXO:",
+    "answers": [
+      "il più a lungo possibile per osservazione continua",
+      "solo il tempo necessario",
+      "sempre da più lati contemporaneamente"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Tra le precauzioni specifiche, HE indica il rischio legato a:",
+    "answers": [
+      "alto esplosivo",
+      "alta elevazione",
+      "hot extraction"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "FRAG indica il pericolo relativo a:",
+    "answers": [
+      "frammentazione dell’involucro",
+      "fragilità del terreno",
+      "frizione meccanica del mezzo"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "La squadra EOR, in termini di protezione, deve anche valutare se sia necessaria:",
+    "answers": [
+      "evacuazione totale o parziale",
+      "esclusivamente la chiusura radio",
+      "soltanto la sostituzione dell’ICP"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "La messaggistica standardizzata è particolarmente importante:",
+    "answers": [
+      "solo in attività amministrative interne",
+      "anche nei contesti multinazionali, per comprensione comune",
+      "soltanto per archiviazione storica"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Il documento NATO che indica i moduli da usare in questo ambito è:",
+    "answers": [
+      "AEODP-6",
+      "STANAG 2036 esclusivamente",
+      "AOP-2 soltanto"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il modulo più comunemente conosciuto come TEN LINE è:",
+    "answers": [
+      "EO Incident Report",
+      "EO Task Report",
+      "Worksheet"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il TEN LINE è chiamato così perché:",
+    "answers": [
+      "è usato solo per dieci giorni",
+      "è composto da dieci linee guida informative",
+      "contiene dieci firme obbligatorie"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Il modulo METHANE viene compilato quando:",
+    "answers": [
+      "c’è presenza di feriti associata a IED/UXO",
+      "si deve classificare una spoletta",
+      "manca il GPS"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il WORKSHEET, secondo il manuale, è usato:",
+    "answers": [
+      "solo in fase addestrativa",
+      "solo per traffico operativo reale",
+      "solo da team WIT"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Nelle prime due pagine del WORKSHEET EOR i paragrafi sono:",
+    "answers": [
+      "sei",
+      "tre",
+      "dieci"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Un IED è definito nel manuale come:",
+    "answers": [
+      "un ordigno costruito e impiegato in maniera non convenzionale",
+      "un munizionamento standard di artiglieria",
+      "una sola tipologia di mina anticarro"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Il manuale collega l’origine storica moderna della minaccia IED agli anni ’70 in:",
+    "answers": [
+      "Gran Bretagna",
+      "Canada",
+      "Giappone"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "C-IED indica:",
+    "answers": [
+      "una tipologia di bomba aereo-terrestre",
+      "l’insieme delle attività tese a prevenire, ridurre e sconfiggere il sistema IED",
+      "una classificazione di priorità NATO"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Nel manuale, il “sistema IED” è inteso come:",
+    "answers": [
+      "sola componente tecnica dell’ordigno",
+      "interconnessione tra individui, risorse e capacità nemiche",
+      "semplice archivio di incidenti"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "La military search può avere obiettivi:",
+    "answers": [
+      "solo logistici",
+      "difensivi e offensivi",
+      "soltanto addestrativi"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "question": "Tra gli obiettivi difensivi della military search compare:",
+    "answers": [
+      "aumentare la libertà di manovra delle forze amiche",
+      "sostituire integralmente l’EOD",
+      "ridurre le comunicazioni tra reparti"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "question": "Tra gli obiettivi offensivi della military search compare:",
+    "answers": [
+      "privare il nemico delle risorse e favorire la raccolta informativa",
+      "soltanto la costruzione di barriere fisiche",
+      "l’uso amministrativo dei worksheet"
+    ],
+    "correctIndex": 0
+  }
+]
