@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accesso Antares II</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Avvio in corso..." />
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="img/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="img/icon-192.png">
+    <style>
+  :root{
+    /* Palette allineata ad app.html */
+    --bg1:#050607;
+    --bg2:#111317;
+    --ac1:#c92b2b;
+    --ac2:#ffcc66;
+    --glass: rgba(255,255,255,.06);
+    --glass-strong: rgba(255,255,255,.14);
+    --txt:#f5f5f5;
+    --muted:#a0a4b0;
+    --vh: 1vh;
+
+    /* alias compatibili col vecchio index */
+    --bg-color: var(--bg1);
+    --card-bg: rgba(10,14,32,.96);
+    --accent: var(--ac1);
+    --accent-soft: var(--ac2);
+    --text-main: var(--txt);
+    --text-muted: var(--muted);
+    --border-subtle: rgba(255,255,255,0.08);
+  }
+
+  @supports (height: 1dvh){
+    :root{ --vh:1dvh; }
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{ height:100%; }
+
+  body{
+    margin:0;
+    min-height:calc(var(--vh) * 100);
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--txt);
+    background: radial-gradient(circle at top, #202635 0, #050607 55%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 16px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  /* “aurora” come in app.html, ma con pseudo-elemento */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:-50% -20% -20% -20%;
+    pointer-events:none;
+    filter:blur(60px);
+    opacity:.4;
+    mix-blend-mode:screen;
+    background: conic-gradient(from 180deg at 50% 50%, #c92b2b 0deg, #ffcc66 120deg, #c92b2b 240deg, #c92b2b 360deg);
+    animation: spin 30s linear infinite;
+    z-index:0;
+  }
+
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  main.card{
+    width:100%;
+    max-width:420px;
+    padding:24px 20px 26px;
+    background: linear-gradient(180deg, rgba(10,14,32,.96), rgba(10,14,32,.9));
+    border-radius:20px;
+    border:1px solid #ffffff1a;
+    box-shadow:0 18px 45px rgba(0,0,0,.85);
+    position:relative;
+    z-index:1;
+  }
+
+  .logo-wrapper{
+    display:flex;
+    justify-content:center;
+    margin-bottom:18px;
+  }
+
+  .logo-circle{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    background: radial-gradient(circle at top, #ffffff22, #c92b2b44);
+    display:grid;
+    place-items:center;
+    border:1px solid #ffffff33;
+    box-shadow:0 10px 30px rgba(0,0,0,.7);
+    overflow:hidden;
+  }
+
+  .logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .title{
+    text-align:center;
+    margin-bottom:4px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    font-size:.8rem;
+    color:var(--muted);
+  }
+
+  .subtitle{
+    text-align:center;
+    font-size:1.05rem;
+    font-weight:700;
+    margin-bottom:18px;
+  }
+
+  .subtitle span{
+    color:var(--ac2);
+    text-shadow:0 0 10px rgba(201,43,43,.55);
+  }
+
+  .description{
+    text-align:center;
+    font-size:.86rem;
+    color:var(--muted);
+    margin-bottom:22px;
+  }
+
+  .countdown-wrapper{
+    margin-bottom:18px;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    background:radial-gradient(circle at top,#262c3f,#090b15 60%);
+    box-shadow:0 10px 22px rgba(0,0,0,.7);
+  }
+
+  .countdown-label{
+    text-align:center;
+    font-size:.75rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .countdown-item{
+    min-width:58px;
+    padding:6px 8px;
+    border-radius:999px;
+    background:radial-gradient(circle at top,#ffffff10,#131729 60%);
+    border:1px solid #ffffff22;
+    text-align:center;
+  }
+
+  .countdown-value{
+    display:block;
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--ac2);
+    text-shadow:0 0 8px rgba(255,204,102,.75);
+  }
+
+  .countdown-unit{
+    display:block;
+    font-size:.63rem;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    color:var(--muted);
+  }
+
+  .field-group{
+    margin-bottom:14px;
+  }
+
+  .field-label{
+    font-size:.8rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#c8d3f3;
+    margin-bottom:4px;
+    display:block;
+  }
+
+  .input-wrapper{
+    position:relative;
+  }
+
+  input[type="text"],
+  input[type="password"]{
+    width:100%;
+    padding:11px 12px;
+    border-radius:11px;
+    border:1px solid #ffffff24;
+    background:#0f1731;
+    color:var(--txt);
+    font-size:.9rem;
+  }
+
+  input::placeholder{
+    color:#98a1c2;
+  }
+
+  input:focus{
+    outline:none;
+    border-color:#9acbff;
+    box-shadow:0 0 0 1px #9acbff55;
+  }
+
+  .eye{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:.7rem;
+    font-weight:600;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    border:none;
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
+    user-select:none;
+  }
+
+  button{
+    width:100%;
+    padding:12px 14px;
+    border-radius:999px;
+    border:1px solid #ffffff22;
+    font-size:.9rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    background:linear-gradient(180deg,#ffffff18,#ffffff0b);
+    color:var(--txt);
+    box-shadow:0 10px 26px rgba(0,0,0,.7);
+    transition: transform .12s ease, box-shadow .12s ease, background .2s;
+  }
+
+  button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 14px 32px rgba(0,0,0,.8);
+    background:linear-gradient(180deg,#75e6ff40,#7c6bff30);
+  }
+
+  button:active{
+    transform:translateY(0);
+    box-shadow:0 8px 18px rgba(0,0,0,.7);
+  }
+
+  .btn-patch{
+    margin-top:8px;
+    border-color:#ffffff33;
+  }
+
+  .btn-telegram{
+    margin-top:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    font-size:.8rem;
+    background:linear-gradient(135deg,#229ED9,#58c6ff30);
+    border-color:#229ED9aa;
+  }
+
+  .btn-install{
+    margin-top:8px;
+    background:transparent;
+    border-style:dashed;
+    border-color:#ffcc6680;
+    color:var(--ac2);
+    box-shadow:none;
+    font-size:.78rem;
+  }
+
+  .error{
+    margin-top:10px;
+    font-size:.8rem;
+    color:#f97373;
+    min-height:1em;
+  }
+
+  .updates{
+    font-size:.78rem;
+    color:var(--muted);
+  }
+
+  .updates h2{
+    font-size:.8rem;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    margin:0 0 8px;
+    color:var(--txt-soft);
+  }
+
+  .updates-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  .updates-list li{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:baseline;
+  }
+
+  .update-version{
+    font-weight:600;
+    color:var(--ac2);
+  }
+
+  .update-date{
+    opacity:.7;
+    font-size:.75em;
+  }
+
+  .updates-link{
+    width:auto;
+    padding:0;
+    margin-left:0;
+    border:none;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    font-size:.75rem;
+    color:var(--ac2);
+    text-decoration:underline;
+    cursor:pointer;
+  }
+
+  .updates-link:hover{
+    opacity:.85;
+  }
+
+
+  .info-modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+  }
+
+  .info-modal-backdrop.active{
+    display:flex;
+  }
+
+  .info-modal{
+    position:relative;
+    width:90%;
+    max-width:420px;
+    max-height:70vh;
+    overflow:auto;
+    background:radial-gradient(circle at top,#1f2933,#050607);
+    border-radius:24px;
+    padding:20px 18px;
+    box-shadow:0 18px 40px rgba(0,0,0,.9);
+    border:1px solid #ffffff22;
+  }
+
+  .updates-modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+  }
+
+  .updates-modal-backdrop.active{
+    display:flex;
+  }
+
+  .updates-modal{
+    position:relative;
+    width:90%;
+    max-width:420px;
+    max-height:70vh;
+    overflow:auto;
+    background:radial-gradient(circle at top,#1f2933,#050607);
+    border-radius:24px;
+    padding:20px 18px;
+    box-shadow:0 18px 40px rgba(0,0,0,.9);
+    border:1px solid #ffffff22;
+  }
+
+  .updates-close{
+    position:absolute;
+    top:10px;
+    right:14px;
+    width:auto;
+    padding:0;
+    border:none;
+    background:transparent;
+    box-shadow:none;
+    font-size:1.3rem;
+    line-height:1;
+    color:var(--muted);
+    cursor:pointer;
+  }
+
+  .updates-close:hover{
+    color:var(--txt-soft);
+  }
+
+  .footer{
+    margin-top:16px;
+    padding-top:10px;
+    border-top:1px solid #ffffff1a;
+    font-size:.75rem;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+
+  .accent-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:radial-gradient(circle at center,#ffcc66,#c92b2b);
+    box-shadow:0 0 8px rgba(201,43,43,.9);
+  }
+
+  @media (max-width:480px){
+    main.card{
+      padding:20px 16px 22px;
+      border-radius:18px;
+    }
+  }
+
+  
+  .presence-chip{
+    position:absolute;
+    top:14px;
+    padding:4px 10px;
+    border-radius:999px;
+    border:1px solid #ffffff22;
+    background:linear-gradient(180deg,#ffffff18,#ffffff06);
+    font-size:.7rem;
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    white-space:nowrap;
+  }
+
+  .presence-chip-left{
+    left:16px;
+  }
+
+  .presence-chip-right{
+    right:16px;
+  }
+
+  .presence-chip-label{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.63rem;
+    color:var(--muted);
+  }
+
+  .presence-chip-value{
+    font-size:.83rem;
+    font-weight:700;
+    color:var(--ac2);
+    text-shadow:0 0 8px rgba(255,204,102,.9);
+  }
+
+  .count-bump{
+    animation: count-bump 0.3s ease-out;
+  }
+
+  @keyframes count-bump{
+    0%{ transform: scale(1); }
+    30%{ transform: scale(1.25); }
+    100%{ transform: scale(1); }
+  }
+
+
+/* ---------------- SPLASH INTRO INDEX ---------------- */
+
+  .intro-splash{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:radial-gradient(circle at top, #202635 0, #050607 55%);
+    pointer-events:auto;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+
+  .intro-splash.is-hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+
+  .intro-splash-inner{
+    position:relative;
+    padding:30px 38px;
+    border-radius:26px;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
+    box-shadow:0 22px 60px rgba(0,0,0,.85);
+    border:1px solid rgba(255,255,255,.16);
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .intro-splash-inner::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255,204,102,.45) 0, transparent 55%),
+      radial-gradient(circle at 100% 100%, rgba(201,43,43,.55) 0, transparent 55%);
+    mix-blend-mode:screen;
+    filter:blur(22px);
+    opacity:.85;
+    animation:introGlow 4s ease-in-out infinite alternate;
+    z-index:-1;
+  }
+
+  .intro-logo-ring{
+    width:92px;
+    height:92px;
+    border-radius:50%;
+    margin:0 auto 16px;
+    padding:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      conic-gradient(from 210deg,
+        rgba(201,43,43,1),
+        rgba(255,204,102,1),
+        rgba(112,186,255,1),
+        rgba(201,43,43,1)
+      );
+    animation:introRingSpin 14s linear infinite;
+  }
+
+  .intro-logo-ring img{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+    object-fit:cover;
+    background:#050607;
+    box-shadow:0 0 0 3px #050607;
+  }
+
+  .intro-title{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:4px;
+    color:#dfe8ff;
+  }
+
+  .intro-subtitle{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+
+  .intro-subtitle span{
+    color:var(--ac2);
+    font-weight:600;
+  }
+
+  .intro-bar{
+    position:relative;
+    width:180px;
+    height:4px;
+    border-radius:999px;
+    margin:0 auto 6px;
+    background:rgba(255,255,255,.08);
+    overflow:hidden;
+  }
+
+  .intro-bar-fill{
+    width:100%;
+    height:100%;
+    transform-origin:left;
+    transform:scaleX(0);
+    background:linear-gradient(90deg, var(--ac1), var(--ac2));
+    box-shadow:0 0 12px rgba(255,204,102,.8);
+    animation:introBar 1.7s ease-out forwards;
+  }
+
+  .intro-hint{
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  @keyframes introGlow{
+    0%{ transform:translate3d(-6px,0,0) scale(1); opacity:.7; }
+    100%{ transform:translate3d(4px,4px,0) scale(1.05); opacity:1; }
+  }
+
+  @keyframes introRingSpin{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+  }
+
+  @keyframes introBar{
+    from{ transform:scaleX(0); }
+    to{ transform:scaleX(1); }
+  }
+
+  @media (max-width:480px){
+    .intro-splash-inner{
+      padding:24px 24px;
+      border-radius:22px;
+    }
+    .intro-title{ font-size:18px; }
+  }
+
+</style>
+
+</head>
+<body>
+
+  <!-- Splash intro animato -->
+  <div class="intro-splash" id="intro-splash">
+    <div class="intro-splash-inner">
+      <div class="intro-logo-ring">
+        <img src="logo-antares.png" alt="Logo Antares II" loading="lazy">
+      </div>
+      <div class="intro-title">27° Corso Sergenti</div>
+      <div class="intro-subtitle">
+        Aeronautica Militare · <span>Antares II</span>
+      </div>
+      <div class="intro-bar">
+        <div class="intro-bar-fill"></div>
+      </div>
+      <div class="intro-hint">Avvio app in corso…</div>
+    </div>
+  </div>
+
+  <main class="card">
+    <div class="presence-chip presence-chip-left">
+      <span class="presence-chip-label">Ultime 24h</span>
+      <span id="daily-count" class="presence-chip-value">…</span>
+    </div>
+    <div class="presence-chip presence-chip-right">
+      <span class="presence-chip-label">Online</span>
+      <span id="online-count" class="presence-chip-value">…</span>
+    </div>
+
+    <div class="logo-wrapper">
+      <div class="logo-circle">
+        <img src="logo-antares.png" alt="Antares II - 27° Corso Sergenti Aeronautica Militare" />
+      </div>
+    </div>
+
+    <div class="title">27° Corso Sergenti</div>
+    <div class="subtitle">
+      Aeronautica Militare · <span>Antares II</span>
+    </div>
+
+        
+      <div class="countdown-wrapper">
+        <div id="countdown-label" class="countdown-label">
+
+        </div>
+        <div class="countdown">
+          <div class="countdown-item">
+            <span id="cd-days" class="countdown-value">--</span>
+            <span class="countdown-unit">Giorni</span>
+          </div>
+          <div class="countdown-item">
+            <span id="cd-hours" class="countdown-value">--</span>
+            <span class="countdown-unit">Ore</span>
+          </div>
+          <div class="countdown-item">
+            <span id="cd-mins" class="countdown-value">--</span>
+            <span class="countdown-unit">Min</span>
+          </div>
+          <div class="countdown-item">
+            <span id="cd-secs" class="countdown-value">--</span>
+            <span class="countdown-unit">Sec</span>
+          </div>
+        </div>
+      </div>
+
+<p class="description">
+      Accesso diretto all'app. Premi il pulsante qui sotto per iniziare.
+    </p>
+
+    <button
+      type="button"
+      onclick="window.location.href='app.html'"
+    >
+      ENTRA NELL'APP
+    </button>
+
+    <button
+      type="button"
+      class="btn-telegram"
+      onclick="window.open('https://t.me/+ExY16SPlFuc5YmQ0','_blank');"
+    >
+      Canale Telegram
+    </button>
+
+    <button type="button" id="patchBtn" class="btn-patch">
+      PATCH CORSO
+    </button>
+    <button type="button" id="installBtn" class="btn-install" style="margin-top:8px;">
+      Installa l'app ANTARES II
+    </button>
+
+    <button type="button" id="installBtn" class="btn-install" style="display:none;margin-top:8px;">
+      Installa l'app ANTARES II Antares II
+    </button>
+    <div id="errore" class="error"></div>
+
+    <div class="footer">
+  
+      
+      <button type="button" class="updates-link" onclick="openInfo()">Informazioni</button>
+      <button type="button" class="updates-link" onclick="openUpdates()">Aggiornamenti</button>
+    </div>
+
+  </main>
+
+  <script src="utenti.js"></script>
+
+  <script>
+    function login() {
+      const matInput = document.getElementById("matricola");
+      const passInput = document.getElementById("password");
+      const errore = document.getElementById("errore");
+
+      const matricola = matInput.value.trim();
+      const password = passInput.value.trim();
+
+      if (!matricola || !password) {
+        errore.textContent = "Inserisci matricola e password.";
+        return;
+      }
+
+      const passwordAttesa = UTENTI[matricola];
+
+      if (!passwordAttesa || passwordAttesa !== password) {
+        errore.textContent = "Credenziali non valide.";
+        return;
+      }
+
+      try {
+        sessionStorage.setItem("loggedIn", "1");
+        sessionStorage.setItem("matricola", matricola);
+      } catch (e) {
+        console.warn("Impossibile usare sessionStorage", e);
+      }
+
+      errore.textContent = "";
+      window.location.href = "app.html";
+    }
+
+    // Gestore per il bottone PATCH CORSO
+    (function() {
+      const FILE_NAME = "Patch.jpg";
+      const FILE_PATH = FILE_NAME;
+      const btnPatch = document.getElementById("patchBtn");
+      if (!btnPatch) return;
+
+      btnPatch.addEventListener("click", async () => {
+        try {
+          const res = await fetch(FILE_PATH);
+          if (!res.ok) throw new Error("Download fallito");
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = FILE_NAME;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 3000);
+        } catch (err) {
+          window.open(FILE_PATH, "_blank");
+        }
+      }, { passive: true });
+    })();
+
+
+    const matField = document.getElementById("matricola");
+    const passField = document.getElementById("password");
+
+    if (matField && passField) {
+      matField.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") login();
+      });
+      passField.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") login();
+      });
+    }
+
+    const toggleEye = document.getElementById("toggleEye");
+
+    if (toggleEye && passField) {
+      toggleEye.addEventListener("click", () => {
+        const isPassword = passField.type === "password";
+        passField.type = isPassword ? "text" : "password";
+        toggleEye.textContent = isPassword ? "NASCONDI" : "MOSTRA";
+      });
+    }
+
+    // --- PWA install handling ---
+    let deferredPrompt = null;
+    const installBtn = document.getElementById("installBtn");
+
+    // Android / Chrome / Edge: beforeinstallprompt
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) {
+        installBtn.style.display = "block";
+      }
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener("click", async () => {
+        // iOS non supporta beforeinstallprompt: mostro istruzioni
+        const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isInStandalone = window.matchMedia("(display-mode: standalone)").matches
+          || window.navigator.standalone === true;
+
+        if (isIos && !deferredPrompt) {
+          alert("Per installare l'app ANTARES II su iPhone/iPad:\n\n1. Tocca il pulsante Condividi (icona quadrato con freccia verso l'alto).\n2. Seleziona 'Aggiungi alla schermata Home'.\n3. Conferma il nome e premi 'Aggiungi'.");
+          return;
+        }
+
+        if (!deferredPrompt) {
+          // Nessun evento disponibile (es. desktop già installato): non faccio nulla o mostro info
+          alert("Per installare l'app ANTARES II sul tuo dispositivo:\n\n- Su Chrome/Edge: apri il menu (⋮ o ⋯) e scegli 'Installa app' o 'Installa ANTARES II'.\n- Su Windows: in Chrome/Edge trovi la voce 'Installa app' vicino alla barra degli indirizzi.");
+          return;
+        }
+
+        deferredPrompt.prompt();
+        try {
+          const choiceResult = await deferredPrompt.userChoice;
+          console.log("User choice:", choiceResult.outcome);
+        } catch (err) {
+          console.error(err);
+        }
+        deferredPrompt = null;
+        installBtn.style.display = "none";
+      });
+    }
+
+    // Service worker registration (necessario per l'installazione come PWA)
+
+
+    function openInfo() {
+      const modal = document.getElementById("infoModal");
+      if (modal) {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+      }
+    }
+
+    function closeInfo() {
+      const modal = document.getElementById("infoModal");
+      if (modal) {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    function openUpdates() {
+      const modal = document.getElementById("updatesModal");
+      if (modal) {
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+      }
+    }
+
+    function closeUpdates() {
+      const modal = document.getElementById("updatesModal");
+      if (modal) {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    }
+
+
+    // --- Countdown 17 dicembre 2025 ---
+    (function () {
+      // Fine giornata 17/12/2025 ora italiana (UTC+1)
+      const targetDate = new Date("2025-12-17T23:59:59+01:00");
+
+      const daysEl    = document.getElementById("cd-days");
+      const hoursEl   = document.getElementById("cd-hours");
+      const minutesEl = document.getElementById("cd-mins");
+      const secondsEl = document.getElementById("cd-secs");
+      const labelEl   = document.getElementById("countdown-label");
+
+      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+      function pad2(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function updateCountdown() {
+        const now  = new Date();
+        const diff = targetDate.getTime() - now.getTime();
+
+        // Scadenza passata o raggiunta
+        if (diff <= 0) {
+          daysEl.textContent    = "00";
+          hoursEl.textContent   = "00";
+          minutesEl.textContent = "00";
+          secondsEl.textContent = "00";
+          if (labelEl) {
+            labelEl.textContent = "Scadenza raggiunta";
+          }
+          clearInterval(timerId);
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days    = Math.floor(totalSeconds / 86400);
+        const hours   = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        daysEl.textContent    = pad2(days);
+        hoursEl.textContent   = pad2(hours);
+        minutesEl.textContent = pad2(minutes);
+        secondsEl.textContent = pad2(seconds);
+      }
+
+      updateCountdown();
+      const timerId = setInterval(updateCountdown, 1000);
+    })();
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+      });
+    }
+  </script>
+
+
+  
+
+<div id="infoModal" class="info-modal-backdrop" aria-hidden="true">
+  <div class="info-modal">
+    <button type="button" class="updates-close" onclick="closeInfo()" aria-label="Chiudi informazioni">&times;</button>
+    <section class="updates">
+      <h2>Informazioni</h2>
+      <p>
+        Questa applicazione è uno strumento di studio non ufficiale, pensato per aiutare gli allievi del
+        <strong>27° Corso Sergenti Antares II</strong> a ripassare e organizzare le materie.
+      </p>
+      <ul class="updates-list">
+        <li>
+          <span class="update-text">
+            I quiz sono stati creati e/o adattati anche con il supporto di strumenti di <strong>intelligenza artificiale</strong>.
+            Possono contenere semplificazioni o imprecisioni e non sostituiscono in alcun modo
+            il materiale ufficiale.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            <strong>Non</strong> troverai domande d&#39;esame ufficiali o banche dati istituzionali, ma solo quesiti pensati
+            per allenare la memoria, la comprensione e la logica sugli argomenti di interesse del corso.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            Gli appunti e i riassunti vengono aggiunti <strong>mano a mano</strong> in base al materiale che viene reso disponibile.
+            Alcune materie o argomenti possono quindi risultare incompleti o in aggiornamento.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            In caso di differenze tra quanto riportato qui e quanto indicato da <strong>documenti ufficiali, istruttori o comandanti</strong>,
+            fanno sempre fede le fonti ufficiali.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            L&#39;app è pensata esclusivamente per l&#39;uso interno e per finalità di studio personale.
+            Ogni utilizzo improprio o condivisione non autorizzata è da evitare.
+          </span>
+        </li>
+      </ul>
+      <p style="margin-top:10px;">
+        Usala come un supporto in più per studiare, ma verifica sempre sui testi e sulle disposizioni ufficiali.
+      </p>
+    </section>
+  </div>
+</div>
+
+<div id="updatesModal" class="updates-modal-backdrop" aria-hidden="true">
+  <div class="updates-modal">
+    <button type="button" class="updates-close" onclick="closeUpdates()" aria-label="Chiudi aggiornamenti">&times;</button>
+    <section class="updates">
+      <h2>Aggiornamenti</h2>
+      <ul class="updates-list">
+        <li>
+          <span class="update-version">v2.4</span>
+          <span class="update-text">Update: aggiunta la visualizzazione del tempo impiegato per il completamento della modalità esame nel pop-up di esito (idoneo/non idoneo); aggiunta pill informativa con il numero di utenti reali connessi durante la giornata; aggiunta pill informativa con il numero di utenti online in tempo reale.</span>
+          <span class="update-date">30 Novembre 2025</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+
+<script>
+  (function(){
+    const BASE_URL = 'https://two7se.onrender.com';
+    const PING_URL = BASE_URL + '/ping';
+    const COUNT_URL = BASE_URL + '/online-count';
+    const COUNT_ID = 'online-count';
+    const DAILY_URL = BASE_URL + '/daily-count';
+    const DAILY_ID = 'daily-count';
+
+    let lastCount = null;
+    let lastDailyCount = null;
+
+    async function sendPresencePing() {
+      try {
+        await fetch(PING_URL, { method: 'POST' });
+      } catch (e) {
+        // errore ignorato
+      }
+    }
+
+    async function refreshOnlineCount() {
+      try {
+        const res = await fetch(COUNT_URL);
+        const data = await res.json();
+        const el = document.getElementById(COUNT_ID);
+        if (!el) return;
+
+        const newCount = Number(data.count);
+
+        if (Number.isNaN(newCount)) {
+          el.textContent = '…';
+          return;
+        }
+
+        if (lastCount !== null && newCount !== lastCount) {
+          el.classList.remove('count-bump');
+          void el.offsetWidth;
+          el.classList.add('count-bump');
+        }
+
+        lastCount = newCount;
+        el.textContent = newCount;
+      } catch (e) {
+        const el = document.getElementById(COUNT_ID);
+        if (!el) return;
+        el.textContent = '…';
+      }
+    }
+
+    
+    async function refreshDailyCount() {
+      try {
+        const res = await fetch(DAILY_URL);
+        const data = await res.json();
+        const el = document.getElementById(DAILY_ID);
+        if (!el) return;
+
+        const newCount = Number(data.count);
+
+        if (Number.isNaN(newCount)) {
+          el.textContent = '…';
+          return;
+        }
+
+        if (lastDailyCount !== null && newCount !== lastDailyCount) {
+          el.classList.remove('count-bump');
+          void el.offsetWidth;
+          el.classList.add('count-bump');
+        }
+
+        lastDailyCount = newCount;
+        el.textContent = newCount;
+      } catch (e) {
+        const el = document.getElementById(DAILY_ID);
+        if (!el) return;
+        el.textContent = '…';
+      }
+    }
+
+function startPresence() {
+      sendPresencePing();
+      refreshOnlineCount();
+      refreshDailyCount();
+      setInterval(() => {
+        sendPresencePing();
+        refreshOnlineCount();
+        refreshDailyCount();
+      }, 5000);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startPresence);
+    } else {
+      startPresence();
+    }
+  })();
+</script>
+
+<script>
+  (function(){
+    const MIN_DURATION = 2400; // durata minima splash in ms
+
+    window.addEventListener('load', function(){
+      const splash = document.getElementById('intro-splash');
+      if(!splash) return;
+
+      const start = performance.now();
+
+      function hideSplash(){
+        const elapsed = performance.now() - start;
+        const remaining = Math.max(0, MIN_DURATION - elapsed);
+
+        setTimeout(function(){
+          splash.classList.add('is-hidden');
+          // Rimuovo dal DOM dopo la transizione
+          setTimeout(function(){
+            if (splash.parentNode) {
+              splash.parentNode.removeChild(splash);
+            }
+          }, 700);
+        }, remaining);
+      }
+
+      hideSplash();
+    });
+  })();
+</script>
+
+
+</body>
+</html>

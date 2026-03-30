@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+
+<link rel="preload" as="image" href="img/logo-antares.webp">
+<link rel="preload" as="image" href="img/hero.webp">
+<style>
+.site-logo img{ border-radius:50%; width:64px; height:64px; object-fit:cover; display:block }
+@media (min-width:768px){ .site-logo img{ width:72px; height:72px } }
+
+.select-wrap{ position:relative; width:100% }
+.select.fancy{
+  -webkit-appearance:none; appearance:none;
+  width:100%;
+  padding:12px 44px 12px 14px;
+  border-radius:14px;
+  border:1px solid #ffffff1f;
+  color:var(--txt);
+  background:
+    linear-gradient(180deg, #ffffff14, #ffffff08),
+    var(--glass-strong);
+  box-shadow:0 10px 30px #00000033;
+  font:inherit; cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .2s, border-color .2s;
+}
+.select.fancy:hover{
+  transform: translateY(-1px);
+  box-shadow:0 14px 34px #00000044;
+  border-color:#9acbff44;
+  background:
+    linear-gradient(180deg, #75e6ff40, #7c6bff30),
+    var(--glass-strong);
+}
+.select.fancy:focus{ outline:2px solid #7daaffaa; outline-offset:2px }
+.select-wrap::after{
+  content:"";
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  width:22px; height:22px; pointer-events:none; opacity:.9;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23dfe8ff' d='M7 10l5 5 5-5z'/></svg>")
+    center/20px 20px no-repeat;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.25));
+}
+@media (prefers-color-scheme: light){
+  .select-wrap::after{ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%231a2440' d='M7 10l5 5 5-5z'/></svg>"); }
+}
+
+
+    .exam-feedback-block{ margin-top:12px; font-size:13px; text-align:left; }
+    .exam-feedback-label{ margin-bottom:4px; font-weight:600; }
+    .exam-feedback-option{ display:flex; gap:8px; align-items:flex-start; margin-top:4px; font-size:13px; }
+    .exam-feedback-option input{ margin-top:2px; }
+    .modal-overlay{ position:fixed; inset:0; display:grid; place-items:center; background:rgba(0,0,0,.45); z-index:9999; backdrop-filter: blur(4px); }
+
+    .exam-feedback-block{ margin-top:12px; font-size:13px; text-align:left; }
+    .exam-feedback-label{ margin-bottom:4px; font-weight:600; }
+    .exam-feedback-option{ display:flex; gap:8px; align-items:flex-start; margin-top:4px; font-size:13px; }
+    .exam-feedback-option input{ margin-top:2px; }
+    .modal-overlay.hidden{ display:none }
+.modal{ max-width:420px; width:92vw; border-radius:18px; padding:18px; background:var(--glass); border:1px solid #ffffff2a; box-shadow:0 20px 50px #00000055 }
+.modal-header{ font-weight:800; font-size:1.15rem; margin-bottom:10px }
+.modal-body{ color:var(--muted); margin-bottom:16px }
+.modal-actions{ display:flex; gap:10px; justify-content:flex-end }
+
+/* dropdown dark fix */
+.select.fancy{ color-scheme: dark; }
+.select.fancy option, .select.fancy optgroup{
+  background-color: rgba(16, 26, 44, .98);
+  color: var(--txt);
+}
+@media (prefers-color-scheme: light){
+  .select.fancy{ color-scheme: light; }
+  .select.fancy option, .select.fancy optgroup{
+    background-color:#fff;
+    color:#1a2440;
+  }
+}
+
+    .result-modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:50; }
+    .result-modal.hidden{ display:none; }
+    .result-modal-backdrop{ position:absolute; inset:0; background:#020617dd; backdrop-filter:blur(4px); }
+    .result-modal-panel{
+      position:relative;
+      padding:24px 20px 18px;
+      border-radius:18px;
+      background:linear-gradient(180deg,#020617,#020617);
+      border:1px solid #ffffff22;
+      box-shadow:0 18px 40px rgba(0,0,0,.7);
+      max-width:320px;
+      width:90%;
+      text-align:center;
+    }
+    .result-modal-icon{ font-size:40px; margin-bottom:8px; }
+    .result-modal-title{ margin:0 0 6px; font-size:20px; }
+    .result-modal-text{ margin:0 0 14px; font-size:14px; line-height:1.4; color:#e5e7eb; white-space:pre-line; }
+    .result-modal-close{
+      cursor:pointer;
+      border:none;
+      border-radius:999px;
+      padding:8px 18px;
+      font-size:14px;
+      font-weight:600;
+      background:linear-gradient(90deg,var(--ac3),var(--ac2));
+      color:white;
+      box-shadow:0 0 0 1px #ffffff22;
+    }
+    .result-modal-close:hover{ transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.6); }
+
+    /* ---------------- SPLASH CARICAMENTO APP ---------------- */
+
+    .app-splash{
+      position:fixed;
+      inset:0;
+      z-index:2000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:radial-gradient(circle at top, #202635 0, #050607 55%);
+      pointer-events:auto;
+      transition:opacity .45s ease, visibility .45s ease;
+    }
+
+    .app-splash.is-hidden{
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+    }
+
+    .app-splash-inner{
+      position:relative;
+      padding:26px 32px;
+      border-radius:24px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
+      box-shadow:0 20px 60px rgba(0,0,0,.85);
+      border:1px solid rgba(255,255,255,.18);
+      text-align:center;
+      overflow:hidden;
+    }
+
+    .app-splash-inner::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,204,102,.4) 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(201,43,43,.55) 0, transparent 55%);
+      mix-blend-mode:screen;
+      filter:blur(20px);
+      opacity:.85;
+      z-index:-1;
+    }
+
+    .app-splash-logo{
+      width:76px;
+      height:76px;
+      border-radius:50%;
+      margin:0 auto 14px;
+      padding:2px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        conic-gradient(from 210deg,
+          rgba(201,43,43,1),
+          rgba(255,204,102,1),
+          rgba(112,186,255,1),
+          rgba(201,43,43,1)
+        );
+      animation: appLogoPulse 1.8s ease-in-out infinite;
+    }
+
+    .app-splash-logo img{
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      object-fit:cover;
+      background:#050607;
+      box-shadow:0 0 0 2px #050607;
+    }
+
+    .app-splash-title{
+      font-size:16px;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#dfe8ff;
+      margin-bottom:6px;
+    }
+
+    .app-splash-subtitle{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:var(--muted);
+      margin-bottom:16px;
+    }
+
+    .app-splash-subtitle span{
+      color:var(--ac2);
+      font-weight:600;
+    }
+
+    .app-splash-spinner{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      margin:0 auto 10px;
+      border:3px solid rgba(223,232,255,.18);
+      border-top-color:var(--ac2);
+      border-right-color:var(--ac1);
+      animation: appSpin 1s linear infinite;
+    }
+
+    .app-splash-text{
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    @keyframes appSpin{
+      from{ transform:rotate(0deg); }
+      to{ transform:rotate(360deg); }
+    }
+
+    @keyframes appLogoPulse{
+      0%{ transform:scale(1); box-shadow:0 0 0 0 rgba(201,43,43,.8); }
+      100%{ transform:scale(1.06); box-shadow:0 0 40px 0 rgba(201,43,43,.0); }
+    }
+
+    @media (max-width:480px){
+      .app-splash-inner{
+        padding:22px 24px;
+        border-radius:20px;
+      }
+      .app-splash-title{ font-size:15px; }
+    }
+
+</style>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>27° Corso Sergenti Antares II – Appunti & Quiz</title>
+  <meta name="description" content="Portale per Appunti e simulatore di quiz per materia." />
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg1:#050607; --bg2:#111317; --ac1:#c92b2b; --ac2:#ffcc66; --ac3:#c92b2b; --ok:#22c55e; --ko:#ef4444; --glass: rgba(255,255,255,.08); --glass-strong: rgba(255,255,255,.14); --txt:#f5f5f5; --muted:#a0a4b0; }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{ margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Helvetica Neue',Arial;          color:var(--txt); background: radial-gradient(circle at top, #202635 0, #050607 55%); overflow-x:hidden; }
+    .aurora{ position:fixed; inset:-50% -20% -20% -20%; pointer-events:none; filter:blur(60px); opacity:.4; mix-blend-mode:screen;
+             background: conic-gradient(from 180deg at 50% 50%, #c92b2b 0deg, #ffcc66 120deg, #c92b2b 240deg, #c92b2b 360deg);
+             /* animation rimossa per renderla statica */}
+    /* @keyframes spin rimossa (sfondo statico) */
+    header{ position:sticky; top:0; z-index:50; backdrop-filter:saturate(130%) blur(10px);
+            background:linear-gradient(180deg, rgba(10,14,32,.9), rgba(10,14,32,.4));
+            border-bottom:1px solid #ffffff14; padding:.8rem 1rem; display:flex; align-items:center; gap:.8rem; }
+    .logo{ width:44px; height:44px; border-radius:50%; background:none; 
+           display:grid; place-items:center; overflow:hidden; }
+.logo img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .title{ font-size:1.1rem; font-weight:800; letter-spacing:.2px }
+    .spacer{flex:1}
+    .pill{font-size:.8rem; color:var(--muted); display:flex; align-items:center; gap:6px;}
+    .info-chip{
+      border-radius:999px;
+      padding:4px 9px;
+      border:1px solid #ffffff22;
+      background:linear-gradient(180deg,#ffffff18,#ffffff06);
+      font-size:.7rem;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .info-chip span{
+      font-size:.75rem;
+    }
+    .online-pill{
+      border-radius:999px;
+      padding:4px 10px;
+      border:1px solid #ffffff22;
+      background:linear-gradient(180deg,#ffffff18,#ffffff06);
+      font-size:.7rem;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      margin-left:8px;
+      white-space:nowrap;
+      cursor:default;
+    }
+    .online-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#22c55e;
+    }
+    .online-label{
+      text-transform:lowercase;
+      letter-spacing:0.03em;
+      font-size:0.75rem;
+    }
+    .count-bump{
+      animation: count-bump 0.3s ease-out;
+    }
+    @keyframes count-bump{
+      0%{ transform: scale(1); }
+      30%{ transform: scale(1.25); }
+      100%{ transform: scale(1); }
+    }
+
+    main{ max-width:1100px; margin:0 auto; padding:24px 16px 80px; }
+    .hero{ margin-top:18px; display:grid; grid-template-columns:1fr; gap:18px; align-items:stretch; }
+    .card{ background:var(--glass); border:1px solid #ffffff1a; border-radius:20px; padding:18px; box-shadow:0 10px 30px #00000033; }
+    .card h2{ margin:6px 0 10px; font-size:1.15rem }
+    .btn-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px }
+    .btn{ display:inline-flex; align-items:center; gap:10px; padding:14px 16px; border-radius:14px; border:1px solid #ffffff1f;
+          background:linear-gradient(180deg, #ffffff14, #ffffff08); color:var(--txt); cursor:pointer; font-weight:700;
+          transition: transform .12s ease, box-shadow .12s ease, background .2s; text-decoration:none; }
+    .btn:hover{ transform: translateY(-1px); box-shadow:0 10px 16px #00000033 } .btn.primary{ background:linear-gradient(180deg, #75e6ff40, #7c6bff30); border-color:#9acbff44 }
+    .btn.mode-active{ border-color:#ffb347; box-shadow:0 0 0 1px #ffb34780; }
+
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px } @media (max-width: 800px){ .grid{ grid-template-columns:1fr } }
+    .list{ display:grid; gap:10px; margin-top:8px; } .item{ display:flex; align-items:center; gap:10px; padding:12px; border:1px solid #ffffff17; border-radius:14px; background:var(--glass-strong) }
+    .item a{ color:#dfe8ff; text-decoration:none; font-weight:600 } .item small{ color:var(--muted) }
+    .section-title{ margin:22px 0 10px; font-size:.95rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.12em }
+    .quiz-setup, .quiz-play, .recap{ display:none } .visible{ display:block }
+    label{ font-size:.9rem; color:#c8d3f3 } select, input[type="number"], input[type="text"]{ width:100%; padding:12px 12px; border-radius:12px; border:1px solid #ffffff24; background:#0f1731; color:var(--txt); }
+    .field{ display:grid; gap:6px }
+    .choices{ display:grid; gap:10px; margin-top:14px }
+    .choice{ display:flex; align-items:center; gap:10px; padding:14px; border:1px solid #ffffff1f; border-radius:12px; cursor:pointer;
+             background:linear-gradient(180deg, #ffffff10, #ffffff06); transition: transform .08s ease, border-color .08s ease, background .2s; }
+    .choice:hover{ transform: translateY(-1px); border-color:#ffffff44 }
+    .choice.correct{ border-color: #19d18b; background: linear-gradient(180deg, #19d18b22, #19d18b10) }
+    .choice.wrong{ border-color: #ef4444; background: linear-gradient(180deg, #ef444422, #ef444410) }
+    .choice.selected{ border-color:#f97316; background:linear-gradient(180deg,#f9731622,#f9731610) }
+    .progress{ height:10px; border-radius:999px; background:#0c1630; border:1px solid #ffffff11; overflow:hidden }
+    .bar{ height:100%; width:0%; background:linear-gradient(90deg, var(--ac3), var(--ac2)); transition:width .25s ease }
+    .meta{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; color:var(--muted) } .tag{ padding:6px 10px; border-radius:999px; background:#ffffff10; border:1px solid #ffffff1a; font-size:.8rem; }
+    footer{ color:#93a0c7; text-align:center; font-size:.85rem; padding:40px 12px } footer a{ color:#cfe3ff }
+    .particles{ position: fixed; inset: 0; pointer-events:none; z-index:-1; display:none !important } .particle{ position:absolute; width:8px; height:8px; border-radius:999px; background:radial-gradient(#fff, transparent); opacity:.18; animation: float 18s ease-in-out infinite }
+    @keyframes float{ 0%{ transform:translateY(0) } 50%{ transform:translateY(-40px) } 100%{ transform:translateY(0) } }
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:.85em; background:#0c1630; border:1px solid #ffffff1a; padding:.05rem .4rem; border-radius:6px}
+
+    /* --- Mobile/Tablet tweaks --- */
+    @media (max-width: 768px){
+      header{ padding: .7rem .8rem }
+      .title{ font-size:1rem }
+      .hero{ grid-template-columns:1fr }
+      .btn{ width:100%; justify-content:center; padding:16px 18px; font-size:1rem }
+      .card{ border-radius:16px }
+      .choices .choice{ padding:16px; }
+      .meta .tag{ margin-top:6px }
+    }
+    @media (pointer:coarse){
+      .btn, .choice{ min-height:52px }
+    }
+    :root{ --vh: 1vh; }
+    @supports (height: 1dvh){ :root{ --vh: 1dvh; } }
+    .fullvh{ min-height: calc(var(--vh) * 100); }
+  
+  .info-modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:60;
+  }
+  .info-modal-backdrop.active{
+    display:flex;
+  }
+  .info-modal{
+    position:relative;
+    width:90%;
+    max-width:460px;
+    max-height:72vh;
+    overflow:auto;
+    background:radial-gradient(circle at top,#1f2933,#050607);
+    border-radius:24px;
+    padding:20px 18px;
+    box-shadow:0 18px 40px rgba(0,0,0,.9);
+    border:1px solid #ffffff22;
+  }
+  .info-close{
+    position:absolute;
+    top:10px;
+    right:14px;
+    width:auto;
+    padding:0;
+    border:none;
+    background:transparent;
+    box-shadow:none;
+    font-size:1.3rem;
+    line-height:1;
+    color:var(--muted);
+    cursor:pointer;
+  }
+  .info-close:hover{
+    color:var(--txt-soft);
+  }
+
+    .result-modal{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:50; }
+    .result-modal.hidden{ display:none; }
+    .result-modal-backdrop{ position:absolute; inset:0; background:#020617dd; backdrop-filter:blur(4px); }
+    .result-modal-panel{
+      position:relative;
+      padding:24px 20px 18px;
+      border-radius:18px;
+      background:linear-gradient(180deg,#020617,#020617);
+      border:1px solid #ffffff22;
+      box-shadow:0 18px 40px rgba(0,0,0,.7);
+      max-width:320px;
+      width:90%;
+      text-align:center;
+    }
+    .result-modal-icon{ font-size:40px; margin-bottom:8px; }
+    .result-modal-title{ margin:0 0 6px; font-size:20px; }
+    .result-modal-text{ margin:0 0 14px; font-size:14px; line-height:1.4; color:#e5e7eb; white-space:pre-line; }
+    .result-modal-close{
+      cursor:pointer;
+      border:none;
+      border-radius:999px;
+      padding:8px 18px;
+      font-size:14px;
+      font-weight:600;
+      background:linear-gradient(90deg,var(--ac3),var(--ac2));
+      color:white;
+      box-shadow:0 0 0 1px #ffffff22;
+    }
+    .result-modal-close:hover{ transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.6); }
+</style>
+<link rel="icon" href="img/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+<noscript>Attiva JavaScript per eseguire i quiz.</noscript>
+
+  <!-- Splash di caricamento app -->
+  <div class="app-splash" id="app-splash">
+    <div class="app-splash-inner">
+      <div class="app-splash-logo">
+        <img src="img/logo-antares.webp" alt="Logo Antares II" loading="lazy">
+      </div>
+      <div class="app-splash-title">Antares II</div>
+      <div class="app-splash-subtitle">
+        27° Corso Sergenti · <span>Quiz</span>
+      </div>
+      <div class="app-splash-spinner"></div>
+      <div class="app-splash-text">Caricamento quiz…</div>
+    </div>
+  </div>
+
+  <div class="aurora"></div><div class="particles" id="particles"></div>
+  <header><div class="logo"><picture>
+  <source type="image/webp" srcset="img/hero.webp">
+  <picture class="site-logo">
+  <img src="img/logo-antares.webp" alt="Logo Antares II" width="64" height="64" loading="eager" decoding="async" style="border-radius:50%;object-fit:cover;">
+</picture>
+</picture></div><div class="title">27° Corso Sergenti Antares II</div><div class="spacer"></div><div class="pill"><div class="online-pill"><span class="online-dot"></span><span class="online-label"> </span><span id="online-count">…</span></div>
+        <div class="online-pill">
+          <span>📈</span>
+          <span id="daily-count">…</span>
+        </div><button class="info-chip" type="button" onclick="openInfo()">⚠️ <span>INFO</span></button></div></header>
+  <main>
+    <section class="hero">
+      <div class="card">
+        <h2>Benvenuto 👋</h2>
+        <p style="color:var(--muted);margin:6px 0 10px"><strong>Un unico spazio</strong> per i tuoi appunti e per l’allenamento con il simulatore di quiz.Quiz e materiali saranno aggiornati in base alle lezioni,<strong>compatibilmente con il tempo a disposizione</strong>.I contenuti hanno <strong>solo finalità di esercitazione</strong>:per programmi, esami e comunicazioni valgono esclusivamente <strong>i canali ufficiali</strong>.</p>
+        <div class="btn-row">
+          <button class="btn primary" id="open-summary">📚 Appunti</button>
+          <button class="btn" id="open-quiz">🧠 Simulatore Quiz Generici 📚</button>
+          <button class="btn" id="open-quiz-2">🧠 SafeQuiz ⚠️</button>
+          <button class="btn" id="open-quiz-3">🧠 Simulatore Esame ⏳</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="summary-section" style="margin-top:18px; display:none">
+      <h2>📚 Appunti</h2>
+      <div class="meta" style="margin-bottom:8px">
+        <span class="tag">📂</span>
+        <span class="tag" id="docs-count">0 📝</span>
+        <span class="tag">👉🏻 <span class="kbd">L</span> 🔄</span>
+      </div>
+      <div class="list" id="docs-list"></div>
+    </section>
+
+    <section class="card quiz-setup" id="quiz-setup" style="margin-top:18px">
+      <h2>🧠 Simulatore di Quiz</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="subject">Materia</label>
+          <div class="select-wrap"><select id="subject" class="select fancy"></select></div>
+        </div>
+        <div class="field">
+          <label for="qcount">Numero di domande</label>
+          <div class="select-wrap"><select id="qcount" class="select fancy"><option value="10">10</option><option value="20" selected>20</option><option value="30">30</option><option value="50">50</option><option value="100">100</option><option value="all">Tutte</option></select></div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:14px">
+        <button class="btn primary" id="start-quiz">▶️ Avvia quiz</button>
+        <button class="btn" id="shuffle-toggle">🔀 Random ON</button>
+        
+        <input type="file" id="file-input" accept="application/json" style="display:none" />
+      </div>
+      <p class="section-title">Progressi</p>
+      <div class="meta"><span class="tag" id="bank-size">–</span><span class="tag" id="saved-state">LocalStorage attivo</span></div>
+    </section>
+
+    <section class="card quiz-play" id="quiz-play" style="margin-top:18px">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+        <h2 id="quiz-title">Quiz</h2>
+        <div class="meta"><span class="tag" id="tracker">0/0</span><span class="tag" id="score">Punteggio: 0</span><span class="tag" id="exam-timer" style="display:none">⏱ 50:00</span></div>
+      </div>
+      <div class="progress" style="margin:10px 0 12px"><div class="bar" id="bar"></div></div>
+      <div id="question" style="font-size:1.05rem; font-weight:600; line-height:1.5"></div>
+      <div class="choices" id="choices"></div>
+      <div class="btn-row" style="margin-top:16px">
+        <button class="btn" id="prev">⬅️ Indietro</button>
+        <button class="btn" id="next">Avanti ➡️</button>
+        <button class="btn" id="finish">🏁 Termina</button>
+        <button class="btn" id="restart">🔁 Ricomincia</button>
+      </div>
+      <p class="section-title">Esito</p>
+      <div class="meta"><span class="tag" id="result">–</span></div>
+    </section>
+
+    <section class="card recap" id="recap" style="margin-top:18px">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px">
+        <h2>📊 Riepilogo quiz</h2>
+        <div class="meta"><span class="tag" id="recap-score">–</span><span class="tag" id="recap-errors">–</span></div>
+      </div>
+      <div class="btn-row" style="margin-top:10px">
+        <button class="btn primary" id="repeat-all">🔁 Ripeti tutto</button>
+        <button class="btn" id="repeat-errors">♻️ Solo errori</button>
+        <button class="btn" id="back-setup">⬅️ Torna alla scelta materia</button>
+      </div>
+      <div class="recap-list" id="recap-list"></div>
+    </section>
+<div class="notice">
+<footer>
+  All’interno trovi appunti e quiz generati tramite Intelligenza Artificiale: <strong>sono un supporto allo studio, non i quiz ufficiali del test finale. <strong>L’obiettivo è darti uno strumento rapido e pratico per ripassare quando vuoi.
+</footer>
+</div>
+    <footer>Antares II · Tool non ufficiale, creato da colleghi per colleghi.</footer>
+  </main>
+
+<div id="end-modal" class="modal-overlay hidden">
+  <div class="modal card">
+    <div class="modal-header">Termina quiz?</div>
+    <div class="modal-body">Vuoi terminare il quiz?</div>
+    <div class="modal-actions">
+      <button class="btn" id="end-cancel">Annulla</button>
+      <button class="btn primary" id="end-confirm">Termina</button>
+    </div>
+  </div>
+</div>
+
+<div id="exam-modal" class="modal-overlay hidden">
+  <div class="modal card">
+    <div class="modal-header">Iniziare simulazione d'esame?</div>
+    <div class="modal-body">
+      <p>Vuoi iniziare la simulazione d'esame: <strong>80 domande</strong> in <strong>50 minuti</strong>?</p>
+      <div class="exam-feedback-block">
+        <div class="exam-feedback-label">Feedback risposte:</div>
+        <label class="exam-feedback-option">
+          <input type="radio" name="exam-feedback" value="instant">
+          <span>Mostra subito se la risposta è corretta o sbagliata</span>
+        </label>
+        <label class="exam-feedback-option">
+          <input type="radio" name="exam-feedback" value="end" checked>
+          <span>Mostra il risultato solo alla fine dell'esame</span>
+        </label>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" id="exam-cancel">Annulla</button>
+      <button class="btn primary" id="exam-confirm">Inizia</button>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    (function spawnParticles(){
+      const wrap = document.getElementById('particles');
+      if(!wrap) return;
+      const N = 40; const W = window.innerWidth; const H = window.innerHeight;
+      for(let i=0;i<N;i++){
+        const p = document.createElement('div'); p.className='particle';
+        p.style.left = Math.random()*W + 'px';
+        p.style.top  = Math.random()*H + 'px';
+        p.style.animationDelay = (Math.random()*10).toFixed(2)+'s';
+        p.style.animationDuration = (14 + Math.random()*10).toFixed(2)+'s';
+        p.style.opacity = (0.10 + Math.random()*0.15).toFixed(2);
+        wrap.appendChild(p);
+      }
+    })();
+
+    const AudioFX = (function(){
+      let ctx; function ensure(){ if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)(); }
+      function play(freq, time, type, gain){
+        ensure(); const o=ctx.createOscillator(), g=ctx.createGain();
+        o.type=type; o.frequency.value=freq; g.gain.value=gain; o.connect(g); g.connect(ctx.destination);
+        o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + time); o.stop(ctx.currentTime + time);
+      }
+      return { ok(){play(900,.12,'triangle',.08)}, ko(){play(220,.18,'sawtooth',.06)}, click(){play(600,.05,'sine',.04)} };
+    })();
+
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const save = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
+    const load = (k,d=null)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch{ return d } };
+
+    const summarySection = $('#summary-section');
+    const quizSetup = $('#quiz-setup');
+    const quizPlay = $('#quiz-play');
+    const recap = $('#recap');
+
+    // Pulsanti modalità (Appunti / Simulatore classico / Focus)
+    const modeButtons = [
+      document.getElementById('open-summary'),
+      document.getElementById('open-quiz'),
+      document.getElementById('open-quiz-2'),
+      document.getElementById('open-quiz-3'),
+    ].filter(Boolean);
+
+    function setActiveModeButton(activeId){
+      modeButtons.forEach(btn=>{
+        if(btn.id === activeId){
+          btn.classList.add('mode-active');
+        }else{
+          btn.classList.remove('mode-active');
+        }
+      });
+    }
+
+    // Swipe orizzontale per cambiare domanda su smartphone/tablet
+    let touchStartX = null;
+    let touchStartY = null;
+    let touchIsHorizontal = false;
+    const SWIPE_THRESHOLD = 40; // pixel
+
+    if(quizPlay){
+      quizPlay.addEventListener('touchstart', (e)=>{
+        if(e.touches.length !== 1) return;
+        const t = e.touches[0];
+        touchStartX = t.clientX;
+        touchStartY = t.clientY;
+        touchIsHorizontal = false;
+      }, {passive:true});
+
+      quizPlay.addEventListener('touchmove', (e)=>{
+        if(touchStartX === null || touchStartY === null) return;
+        const t = e.touches[0];
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+
+        // se il movimento è principalmente orizzontale, blocchiamo lo scroll della pagina
+        if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10){
+          touchIsHorizontal = true;
+          // listener esplicitamente non-passivo per poter usare preventDefault
+          try{ e.preventDefault(); }catch(_){}
+        }
+      }, {passive:false});
+
+      quizPlay.addEventListener('touchend', (e)=>{
+        if(touchStartX === null || touchStartY === null) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+        touchStartX = null;
+        touchStartY = null;
+
+        // ignora swipe quasi verticali o troppo corti
+        if(Math.abs(dx) < Math.abs(dy)) return;
+        if(Math.abs(dx) < SWIPE_THRESHOLD) return;
+        if(!quizPlay.classList.contains('visible')) return;
+
+        if(dx < 0){
+          // swipe verso sinistra -> domanda successiva
+          const nextBtn = document.getElementById('next');
+          if(nextBtn) nextBtn.click();
+        }else{
+          // swipe verso destra -> domanda precedente
+          const prevBtn = document.getElementById('prev');
+          if(prevBtn) prevBtn.click();
+        }
+      }, {passive:true});
+    }
+
+    $('#open-summary')?.addEventListener('click', ()=>{
+      stopExamTimer();
+      setActiveModeButton('open-summary');
+      showSummaries();
+      summarySection.style.display='block';
+      quizSetup.classList.remove('visible');
+      quizPlay.classList.remove('visible');
+      recap?.classList.remove('visible');
+      AudioFX.click();
+    });
+
+    $('#open-quiz')?.addEventListener('click', ()=>{
+      stopExamTimer();
+      setActiveModeButton('open-quiz');
+      QUIZ_MODE = 1;
+      loadBanksIndex();
+      summarySection.style.display='none';
+      quizSetup.classList.add('visible');
+      quizPlay.classList.remove('visible');
+      recap?.classList.remove('visible');
+      AudioFX.click();
+    });
+
+    $('#open-quiz-2')?.addEventListener('click', ()=>{
+      stopExamTimer();
+      setActiveModeButton('open-quiz-2');
+      QUIZ_MODE = 2;
+      loadBanksIndex();
+      summarySection.style.display='none';
+      quizSetup.classList.add('visible');
+      quizPlay.classList.remove('visible');
+      recap?.classList.remove('visible');
+      AudioFX.click();
+    });
+
+    // Simulatore 3 – Modalità Esame
+    $('#open-quiz-3')?.addEventListener('click', ()=>{
+      stopExamTimer();
+      openExamModal();
+      AudioFX.click();
+    });
+
+async function fetchJSON(path){
+      const bust = Date.now();
+      try{
+        const res = await fetch(`${path}?v=${bust}`, {cache:'no-store'});
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        return await res.json();
+      }catch(e){ return null }
+    }
+
+    async function showSummaries(){
+      summarySection.style.display='block'; quizSetup.classList.remove('visible'); quizPlay.classList.remove('visible'); recap.classList.remove('visible');
+      const index = await fetchJSON('docs/index.json') || {docs:[]};
+      const list = $('#docs-list'); list.innerHTML='';
+      const docs = index.docs || [];
+      $('#docs-count').textContent = `${docs.length} file`;
+      if(!docs.length){ list.innerHTML = `<div class="item"><small>Nessun file elencato. Crea <span class="kbd">/docs/index.json</span>.</small></div>`; return; }
+      for(const d of docs){
+        const v = (index && index.version) ? index.version : Date.now();
+        const row = document.createElement('div'); row.className='item';
+        row.innerHTML = `📄 <a target="_blank" href="docs/${encodeURIComponent(d.file)}?v=${v}">${d.title||d.file}</a> <small>(${d.file})</small>`;
+        list.appendChild(row);
+      }
+    }
+
+    const subjectSelect = $('#subject');
+    const qcountInput = $('#qcount');
+    const savedQ = load('qcount', '20'); if(qcountInput && savedQ) qcountInput.value = savedQ;
+    const bankSizeTag = $('#bank-size');
+    const shuffleBtn = $('#shuffle-toggle');
+    const importBtn = $('#import-json');
+    const fileInput = $('#file-input');
+    let SHUFFLE = load('shuffle', true);
+    function updateShuffleBtn(){ shuffleBtn.textContent = SHUFFLE ? '🔀 Random ON' : '⏩ Ordine fisso'; shuffleBtn.classList.toggle('primary', SHUFFLE); }
+    updateShuffleBtn();
+    shuffleBtn?.addEventListener('click', ()=>{ SHUFFLE = !SHUFFLE; save('shuffle', SHUFFLE); updateShuffleBtn(); AudioFX.click(); });
+    importBtn?.addEventListener('click', ()=> fileInput.click());
+    fileInput?.addEventListener('change', (e)=>{
+      const file = e.target.files?.[0]; if(!file) return;
+      const reader = new FileReader(); reader.onload = ()=>{
+        try{ const data = JSON.parse(reader.result); const customName = file.name.replace(/\.json$/i,''); customBanks[customName] = data; populateSubjects(); AudioFX.ok(); }
+        catch{ alert('JSON non valido'); AudioFX.ko(); }
+      }; reader.readAsText(file);
+    });
+    importBtn?.addEventListener('dragover', e=>{ e.preventDefault(); importBtn.style.borderColor = '#9acbffaa'; });
+    importBtn?.addEventListener('dragleave', e=>{ importBtn.style.borderColor = ''; });
+    importBtn?.addEventListener('drop', e=>{ e.preventDefault(); importBtn.style.borderColor = ''; const file = e.dataTransfer.files?.[0]; if(file){ fileInput.files = e.dataTransfer.files; fileInput.dispatchEvent(new Event('change')); } });
+
+    let banksIndex = {subjects:[]};
+    let customBanks = {};
+
+    
+    function getDataBasePath(){
+      return (QUIZ_MODE === 2) ? 'data_sim2/' : 'data/';
+    }
+
+
+    // Carica una banca dati per la Modalità Esame:
+    // 1) prova da SafeQuiz (data_sim2)
+    // 2) se vuota/mancante, fallback a data/ classico
+    async function loadExamBank(file){
+      try{
+        const safe = await fetchJSON('data_sim2/' + file);
+        if(Array.isArray(safe) && safe.length) return safe;
+      }catch(_){}
+
+      try{
+        const classic = await fetchJSON('data/' + file);
+        if(Array.isArray(classic) && classic.length) return classic;
+      }catch(_){}
+
+      console.warn('Banca dati non trovata per', file);
+      return [];
+    }
+
+    // Costruisce l'intera prova d'esame in base a EXAM_SPEC
+    async function buildExamQuestions(){
+      const questionsExam = [];
+
+      for(const spec of EXAM_SPEC){
+        const bank = await loadExamBank(spec.file);
+        if(!Array.isArray(bank) || !bank.length) continue;
+
+        let pool = [...bank.keys()];
+        pool = shuffle(pool);
+
+        const take = Math.min(spec.count, pool.length);
+        for(let i=0; i<take; i++){
+          const q = { ...bank[pool[i]] };
+          q.subject = spec.name;
+          questionsExam.push(q);
+        }
+      }
+
+      shuffle(questionsExam);
+      return questionsExam;
+    }
+
+    // Avvia la Modalità Esame (Simulatore 3)
+    async function startExamMode(){
+      stopExamTimer();
+      QUIZ_MODE = 3;
+
+      summarySection.style.display = 'none';
+      quizSetup.classList.remove('visible');  // niente scelta materia/numero
+      recap?.classList.remove('visible');
+
+      const examQs = await buildExamQuestions();
+      if(!examQs.length){
+        alert('Impossibile avviare la Modalità Esame: banche dati mancanti o vuote.');
+        AudioFX.ko();
+        return;
+      }
+
+      questions = examQs;
+      order = [...questions.keys()];
+      current = 0;
+      score = 0;
+      selected.clear();
+      locked.clear();
+      viewOrder.clear();
+      navBusy = false;
+
+      const total = order.length;
+      quizTitle.textContent = `🧠 Simulatore Esame (${total} domande, ${EXAM_DURATION_MIN} minuti)`;
+      resultTag.textContent = '–';
+      bar.style.width = '0%';
+
+      quizPlay.classList.add('visible');
+      renderQuestion();
+
+      startExamTimer(EXAM_DURATION_MIN * 60);
+      AudioFX.ok();
+    }
+
+
+async function loadBanksIndex(){ const idx = await fetchJSON(getDataBasePath() + 'index.json'); if(idx && Array.isArray(idx.subjects)) banksIndex = idx; populateSubjects(); }
+    async function populateSubjects(){
+      const prev = load('subject');
+      subjectSelect.innerHTML = '';
+      const subjects = [...(banksIndex.subjects||[]) , ...Object.keys(customBanks).map(k=>({name:`(locale) ${k}`, file:`__local__:${k}`}))];
+      for(const s of subjects){ const opt = document.createElement('option'); opt.value=s.file; opt.textContent=s.name; subjectSelect.appendChild(opt); }
+      if(prev){ subjectSelect.value = prev; }
+      await previewBankSize();
+    }
+    subjectSelect?.addEventListener('change', ()=>{ save('subject', subjectSelect.value); previewBankSize(); AudioFX.click(); })
+    qcountInput?.addEventListener('change', ()=> save('qcount', qcountInput.value));
+
+    async function previewBankSize(){
+      const file = subjectSelect.value; let data = [];
+      if(file?.startsWith('__local__:')){ data = customBanks[file.split(':')[1]] || []; }
+      else if(file){
+        const bank = await fetchJSON(getDataBasePath() + file);
+        if(bank) data = bank;
+      }
+      bankSizeTag.textContent = data.length ? `${data.length} domande in banca dati` : '0 domande';
+    }
+
+
+    const quizTitle = $('#quiz-title'); const qNode = $('#question'); const choicesNode = $('#choices');
+    const bar = $('#bar'); const tracker = $('#tracker'); const scoreTag = $('#score'); const resultTag = $('#result'); const examTimerTag = $('#exam-timer');
+    let questions = []; let order = []; let current = 0; let score = 0;
+    const selected = new Map();  // idx -> chosen answer index
+    const viewOrder = new Map(); // idx -> [display order of answers]
+
+// Modalità quiz:
+// 1 = simulatore classico (data/)
+// 2 = SafeQuiz (data_sim2/)
+// 3 = Modalità Esame (Simulatore 3)
+    let QUIZ_MODE = 1;
+    let EXAM_FEEDBACK_MODE = 'end';
+
+// Configurazione Modalità Esame
+    const EXAM_DURATION_MIN = 50;
+
+// Specifica numero domande per materia
+    const EXAM_SPEC = [
+      { code:'ORG', name:'Organica', file:'ORG.json', count:8 },
+      { code:'DPM', name:'Diritto penale militare', file:'DP.json', count:8 },
+      { code:'AM',  name:"Appartenente AM", file:'AM.json', count:8 },
+      { code:'NSR', name:'Normative di servizio e regolamento', file:'NSR.json', count:8 },
+      { code:'SGA', name:'Stato Giuridico e Avanzamento', file:'SGA.json', count:8 },    
+      { code:'DC',  name:'Diritto costituzionale', file:'DC.json', count:6 },
+      { code:'DI',  name:'Diritto internazionale', file:'DI.json', count:6 },
+      { code:'DU',  name:'Diritto umanitario nei t armati', file:'DIU.json', count:6 },
+      { code:'GE',  name:'Gender', file:'GE.json', count:5 },
+      { code:'INF', name:'Informatica', file:'INF.json', count:10 },
+      { code:'SL',  name:'Salute e sicurezza nei luoghi di lavoro e tutela ambientale', file:'SL.json', count:7 },
+    ];
+
+    const locked = new Set();    // idx answered
+    let navBusy = false;
+
+// Timer Modalità Esame
+    let examTimer = null;
+    let examRemaining = 0;
+
+    function formatTime(sec){
+      const m = Math.floor(sec/60).toString().padStart(2,'0');
+      const s = (sec%60).toString().padStart(2,'0');
+      return `${m}:${s}`;
+    }
+
+    function startExamTimer(seconds){
+      if(examTimer) clearInterval(examTimer);
+      examRemaining = seconds;
+      if(examTimerTag){
+        examTimerTag.style.display = 'inline-flex';
+        examTimerTag.textContent = `⏱ ${formatTime(examRemaining)}`;
+      }
+      examTimer = setInterval(()=>{
+        examRemaining--;
+        if(examRemaining <= 0){
+          clearInterval(examTimer);
+          examTimer = null;
+          examRemaining = 0;
+          if(examTimerTag){
+            examTimerTag.textContent = '⏱ 00:00';
+          }
+          // tempo scaduto -> chiudi automaticamente il quiz d'esame
+          finishQuiz(true);
+        }else if(examTimerTag){
+          examTimerTag.textContent = `⏱ ${formatTime(examRemaining)}`;
+        }
+      }, 1000);
+    }
+
+    function stopExamTimer(){
+      if(examTimer){
+        clearInterval(examTimer);
+        examTimer = null;
+      }
+      if(examTimerTag){
+        examTimerTag.style.display = 'none';
+      }
+    }
+    function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]] } return arr }
+    function getSubjectLabel(){ const opt = subjectSelect.options[subjectSelect.selectedIndex]; return opt?.textContent || 'Materia'; }
+
+    
+    function transformToThreeAnswers(bank){
+      if(!Array.isArray(bank)) return [];
+      return bank.map(item=>{
+        if(!Array.isArray(item.answers) || item.answers.length <= 3){
+          return item;
+        }
+        const total = item.answers.length;
+        let correct = (typeof item.correctIndex === 'number') ? item.correctIndex : 0;
+        if(correct < 0 || correct >= total) correct = 0;
+
+        const indices = [correct];
+        const others = [];
+        for(let i=0;i<total;i++){
+          if(i !== correct) others.push(i);
+        }
+
+        for(let i=others.length-1;i>0;i--){
+          const j = Math.floor(Math.random()*(i+1));
+          [others[i], others[j]] = [others[j], others[i]];
+        }
+
+        while(indices.length < 3 && others.length){
+          indices.push(others.pop());
+        }
+
+        const newAnswers = indices.map(i => item.answers[i]);
+        const newItem = Object.assign({}, item);
+        newItem.answers = newAnswers;
+        newItem.correctIndex = 0;
+        return newItem;
+      });
+    }
+
+$('#start-quiz')?.addEventListener('click', async ()=>{
+      const sel = subjectSelect.value; if(!sel){ alert('Seleziona una materia'); return }
+      let bank = [];
+      if(sel.startsWith('__local__:')){ bank = customBanks[sel.split(':')[1]] || []; } else { bank = await fetchJSON(getDataBasePath() + sel) || []; }
+      if(!Array.isArray(bank) || !bank.length) { alert('Banca dati vuota o non valida'); AudioFX.ko(); return }
+      if(QUIZ_MODE === 2){
+        bank = transformToThreeAnswers(bank);
+      }
+      const n = (qcountInput.value==='all') ? bank.length : Math.min(parseInt(qcountInput.value||'1',10), bank.length);
+      let pool = [...bank.keys()]; if(SHUFFLE) pool = shuffle(pool);
+      order = pool.slice(0, n);
+      questions = bank; current = 0; score = 0; selected.clear(); viewOrder.clear(); locked.clear();
+      quizTitle.textContent = `Quiz – ${getSubjectLabel()} (${n} domande)`;
+      quizSetup.classList.remove('visible'); recap?.classList.remove('visible'); quizPlay.classList.add('visible');
+      renderQuestion(); AudioFX.ok();
+    });
+
+    function getViewOrder(idx, answersLen){
+      if(viewOrder.has(idx)) return viewOrder.get(idx);
+      const base = Array.from({length: answersLen}, (_,i)=>i);
+      const arr = SHUFFLE ? shuffle(base) : base;
+      viewOrder.set(idx, arr);
+      return arr;
+    }
+
+    function renderQuestion(){
+  const idx = order[current];
+  const item = questions[idx];
+  if(!item){ return; }
+
+  tracker.textContent = `${current+1}/${order.length}`;
+
+  // Punteggio: in Modalità Esame posso nasconderlo fino alla fine
+  if(QUIZ_MODE === 3 && EXAM_FEEDBACK_MODE === 'end'){
+    scoreTag.textContent = 'Punteggio: — (visibile a fine esame)';
+  }else{
+    scoreTag.textContent = `Punteggio: ${score}`;
+  }
+
+  bar.style.width = ((current)/order.length*100).toFixed(1)+'%';
+  qNode.textContent = item.question;
+
+  const ansLen = Array.isArray(item.answers) ? item.answers.length : 0;
+  const ord = getViewOrder(idx, ansLen);
+  choicesNode.innerHTML = '';
+  ord.forEach((k,i)=>{
+    const div = document.createElement('div');
+    div.className = 'choice';
+    div.dataset.index = k;
+    const letter = String.fromCharCode(65+i);
+    div.innerHTML = `<div style="font-weight:700">${letter}</div><div>${item.answers?.[k] ?? '—'}</div>`;
+    div.addEventListener('click', ()=> selectAnswer(idx, k));
+    choicesNode.appendChild(div);
+  });
+
+  if(QUIZ_MODE === 3 && EXAM_FEEDBACK_MODE === 'end'){
+    // Modalità Esame con feedback solo finale:
+    // evidenzio solo la risposta scelta (arancione), senza mostrare giusto/sbagliato
+    const chosen = selected.get(idx);
+    if(chosen != null){
+      $$('.choice').forEach(ch=>{
+        const ii = parseInt(ch.dataset.index,10);
+        ch.classList.toggle('selected', ii===chosen);
+        ch.classList.remove('correct');
+        ch.classList.remove('wrong');
+      });
+    }else{
+      $$('.choice').forEach(ch=>{
+        ch.classList.remove('selected','correct','wrong');
+      });
+    }
+    resultTag.textContent = '–';
+  }else if(locked.has(idx)){
+    // Modalità classiche (e simulatore esame con feedback immediato)
+    paintChoices(idx, selected.get(idx), item.correctIndex);
+    const ordPosCorrect = ord.indexOf(item.correctIndex);
+    resultTag.textContent =
+      selected.get(idx) === item.correctIndex
+        ? '✅ Corretto'
+        : `❌ Errato – Giusta: ${String.fromCharCode(65 + ordPosCorrect)}`;
+  }else{
+    resultTag.textContent = '–';
+  }
+}
+
+    function paintChoices(idx, chosenK, correctK){
+      $$('.choice').forEach(ch=>{
+        const ii = parseInt(ch.dataset.index,10);
+        ch.classList.toggle('correct', ii===correctK);
+        ch.classList.toggle('wrong', ii===chosenK && chosenK!==correctK);
+      });
+    }
+
+    function selectAnswer(idx, k){
+  const item = questions[idx];
+  if(!item) return;
+
+  // Modalità Esame con feedback SOLO a fine prova:
+  // l'utente può cambiare risposta, non blocchiamo e non mostriamo subito giusto/sbagliato
+  if(QUIZ_MODE === 3 && EXAM_FEEDBACK_MODE === 'end'){
+    selected.set(idx, k);
+
+    $$('.choice').forEach(ch=>{
+      const ii = parseInt(ch.dataset.index,10);
+      ch.classList.toggle('selected', ii===k);
+      ch.classList.remove('correct');
+      ch.classList.remove('wrong');
+    });
+
+    resultTag.textContent = '–';
+    if(typeof AudioFX !== 'undefined' && AudioFX && AudioFX.click){
+      AudioFX.click();
+    }
+    return;
+  }
+
+  // Modalità standard (1,2) e Modalità Esame con feedback immediato:
+  if(locked.has(idx)) return;
+  selected.set(idx, k);
+  locked.add(idx);
+
+  if(k === item.correctIndex){
+    score++;
+    AudioFX.ok();
+  }else{
+    AudioFX.ko();
+  }
+
+  paintChoices(idx, k, item.correctIndex);
+  scoreTag.textContent = `Punteggio: ${score}`;
+  const ord = viewOrder.get(idx) || [0,1,2,3];
+  const ordPosCorrect = ord.indexOf(item.correctIndex);
+  resultTag.textContent = k===item.correctIndex
+    ? '✅ Corretto'
+    : `❌ Errato – Giusta: ${String.fromCharCode(65 + ordPosCorrect)}`;
+}
+
+    function safeNav(delta){
+      if(navBusy) return; navBusy = true;
+      const nextIdx = current + delta;
+      if(nextIdx >= 0 && nextIdx < order.length){ current = nextIdx; renderQuestion(); AudioFX.click(); }
+      setTimeout(()=> navBusy=false, 80);
+    }
+    $('#next')?.addEventListener('click', ()=>{
+      try{
+        if(typeof current!=='undefined' && Array.isArray(order) && current >= order.length - 1){
+          openEndModal(); return;
+        }
+      }catch(_){}
+      safeNav(+1);
+    });
+    $('#prev')?.addEventListener('click', ()=> safeNav(-1));
+
+    $('#finish')?.addEventListener('click', ()=>{ openEndModal(); AudioFX.click(); });
+    $('#restart')?.addEventListener('click', ()=>{
+      if(QUIZ_MODE === 3){
+        // In modalità esame ricostruisco da zero la prova
+        startExamMode();
+        return;
+      }
+      const n = order.length;
+      score = 0;
+      selected.clear();
+      locked.clear();
+      viewOrder.clear();
+      current = 0;
+      quizTitle.textContent = `Quiz – ${getSubjectLabel()} (${n} domande)`;
+      renderQuestion();
+      resultTag.textContent = '–';
+      AudioFX.click();
+    });
+
+function finishQuiz(auto=false){
+  // Se siamo in Modalità Esame blocco sempre il timer
+  if(QUIZ_MODE === 3){
+    stopExamTimer();
+
+    // Se durante l'esame non abbiamo aggiornato il punteggio domanda per domanda,
+    // lo ricalcoliamo ora in base alle risposte date.
+    if(EXAM_FEEDBACK_MODE === 'end'){
+      score = 0;
+      for(const idx of order){
+        const q = questions[idx];
+        if(!q) continue;
+        if(selected.get(idx) === q.correctIndex){
+          score++;
+        }
+      }
+    }
+  }
+
+  bar.style.width='100%';
+  const total = order.length;
+  const perc = total ? Math.round(score / total * 100) : 0;
+
+  // Logica Idoneo / Non idoneo solo per Simulatore 3
+  let esito = '';
+  if(QUIZ_MODE === 3){
+    const isIdoneo = (score >= 48);
+    esito = isIdoneo ? ' – ✅ Idoneo' : ' – ❌ Non idoneo';
+
+    // Popup stile app (se definito), altrimenti fallback solo testo
+    if(typeof showResultModal === 'function'){
+      showResultModal(isIdoneo, score, total, perc, auto);
+    }else if(auto){
+      alert('⏱ Tempo scaduto: il quiz è stato chiuso automaticamente.');
+    }
+  }
+
+  resultTag.textContent = `🏁 Completato: ${score}/${total} (${perc}%)${esito}`;
+  showRecap();
+}
+
+function showResultModal(isIdoneo, score, total, perc, autoClose){
+  const modal = document.getElementById('result-modal');
+  if(!modal) return;
+  const iconNode = document.getElementById('result-modal-icon');
+  const titleNode = document.getElementById('result-modal-title');
+  const textNode = document.getElementById('result-modal-text');
+
+  // Testo base con punteggio
+  let text = `Punteggio: ${score}/${total} (${perc}%)`;
+
+  // Se siamo in modalità esame e abbiamo il timer, aggiungo il tempo impiegato
+  if (typeof QUIZ_MODE !== 'undefined' && QUIZ_MODE === 3 && typeof examRemaining === 'number') {
+    const totalSec = EXAM_DURATION_MIN * 60;
+    const usedSec  = Math.max(0, totalSec - examRemaining);
+    const usedText = formatTime(usedSec);
+    text += ` – Il tempo impiegato per svolgere la simulazione d’esame è stato di ${usedText}`;
+  }
+
+  // Messaggio aggiuntivo se il quiz è stato chiuso automaticamente per tempo scaduto
+  if(autoClose){
+    text = `⏱ Tempo scaduto: il quiz è stato chiuso automaticamente.\n\n${text}`;
+  }
+
+  // Icona e titolo Idoneo / Non idoneo
+  if(isIdoneo){
+    if(iconNode) iconNode.textContent = '🎉';
+    if(titleNode) titleNode.textContent = 'Idoneo';
+  }else{
+    if(iconNode) iconNode.textContent = '😞';
+    if(titleNode) titleNode.textContent = 'Non idoneo';
+  }
+
+  if(textNode) textNode.textContent = text;
+  modal.classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  const modal = document.getElementById('result-modal');
+  if(!modal) return;
+  const closeBtn = document.getElementById('result-modal-close');
+  const backdrop = modal.querySelector('.result-modal-backdrop');
+  const hide = () => modal.classList.add('hidden');
+  if(closeBtn) closeBtn.addEventListener('click', hide);
+  if(backdrop) backdrop.addEventListener('click', hide);
+});
+
+    function showRecap(){
+      quizPlay.classList.remove('visible');
+      recap.classList.add('visible');
+
+      const total = order.length;
+      const err = order.filter(i => selected.get(i) !== questions[i].correctIndex);
+
+      // Idoneo / Non idoneo solo per Modalità Esame
+      let esito = '';
+      if(QUIZ_MODE === 3){
+        if(score >= 48){
+          esito = ' – ✅ Idoneo';
+        }else{
+          esito = ' – ❌ Non idoneo';
+        }
+      }
+
+      $('#recap-score').textContent = `Punteggio: ${score}/${total}${esito}`;
+      $('#recap-errors').textContent = `Errori: ${err.length}`;
+
+      const list = $('#recap-list');
+      list.innerHTML = '';
+
+      for(const idx of order){
+        const q = questions[idx];
+        const userK = selected.get(idx);
+        const correctK = q.correctIndex;
+        const baseOrd = Array.from({length: q.answers.length}, (_,i)=>i);
+        const ord = viewOrder.get(idx) || baseOrd;
+        const ok = (userK === correctK);
+        const tua = userK != null ? String.fromCharCode(65 + ord.indexOf(userK)) : '—';
+        const giusta = String.fromCharCode(65 + ord.indexOf(correctK));
+        const listHtml = ord.map((k,i)=>`${String.fromCharCode(65+i)}) ${q.answers[k]}`).join('<br/>');
+        const item = document.createElement('div');
+        item.className = 'recap-item';
+        const subjectTag = q.subject ? `<span class="tag">Materia: ${q.subject}</span>` : '';
+        item.innerHTML = `<h4>${q.question}</h4>
+          <div class="meta">
+            <span class="badge ${ok?'ok':'ko'}">${ok?'✔️ Corretto':'❌ Errato'}</span>
+            <span class="tag">Tua: ${tua}</span>
+            <span class="tag">Giusta: ${giusta}</span>
+            ${subjectTag}
+          </div>
+          <div style="margin-top:8px">${listHtml}</div>`;
+        list.appendChild(item);
+      }
+
+      $('#repeat-all').onclick = () => {
+        startRepeat(order.slice());
+      };
+      $('#repeat-errors').onclick = () => {
+        const errOrder = order.filter(i => selected.get(i) !== questions[i].correctIndex);
+        if(!errOrder.length){
+          alert('Nessun errore da ripetere!');
+          return;
+        }
+        startRepeat(errOrder);
+      };
+      $('#back-setup').onclick = () => {
+        recap.classList.remove('visible');
+        quizSetup.classList.add('visible');
+      };
+    }
+
+
+    function startRepeat(newOrder){
+      order = newOrder; current = 0; score = 0; selected.clear(); locked.clear(); viewOrder.clear();
+      recap.classList.remove('visible'); quizPlay.classList.add('visible');
+      quizTitle.textContent = `Quiz – Ripetizione (${order.length} domande)`;
+      renderQuestion();
+    }
+
+    document.addEventListener('keydown', (e)=>{
+      const key = e.key;
+      const lower = (key || '').toLowerCase();
+
+      // Evita di interferire con la digitazione nei campi di input
+      const target = e.target || e.srcElement;
+      const tagName = (target && target.tagName ? target.tagName : '').toLowerCase();
+      if(tagName === 'input' || tagName === 'textarea' || tagName === 'select' || (target && target.isContentEditable)) {
+        return;
+      }
+
+      // Ricarica elenco appunti con "L"
+      if(lower === 'l'){
+        showSummaries();
+        return;
+      }
+
+      // Gestione modale di fine quiz: Invio = "Termina"
+      const endOverlay = document.getElementById('end-modal');
+      const endOpen = endOverlay && !endOverlay.classList.contains('hidden');
+      if(endOpen){
+        if(key === 'Enter'){
+          e.preventDefault();
+          const btnOk = document.getElementById('end-confirm');
+          if(btnOk) btnOk.click();
+        }
+        return;
+      }
+
+      const quizActive = quizPlay && quizPlay.classList.contains('visible');
+
+      if(quizActive){
+        // Disabilita frecce su/giù per evitare risposte involontarie
+        if(key === 'ArrowUp' || key === 'ArrowDown'){
+          e.preventDefault();
+          return;
+        }
+
+        // Navigazione domande con frecce
+        if(key === 'ArrowRight'){
+          e.preventDefault();
+          $('#next')?.click();
+          return;
+        }
+        if(key === 'ArrowLeft'){
+          e.preventDefault();
+          $('#prev')?.click();
+          return;
+        }
+
+        // Invio = avanti / termina (se non è già aperta la modale)
+        if(key === 'Enter'){
+          e.preventDefault();
+          try{
+            if(typeof current!=='undefined' && Array.isArray(order) && current >= order.length - 1){
+              $('#finish')?.click();
+            }else{
+              $('#next')?.click();
+            }
+          }catch(_){
+            $('#next')?.click();
+          }
+          return;
+        }
+
+        // Risposte con lettere (A, B, C, D, ...)
+        if(lower >= 'a' && lower <= 'z'){
+          const index = lower.charCodeAt(0) - 97;
+          if(choicesNode){
+            const nodes = choicesNode.querySelectorAll('.choice');
+            if(nodes && index >= 0 && index < nodes.length){
+              e.preventDefault();
+              nodes[index].click();
+            }
+          }
+        }
+      }else{
+        // Fuori dal quiz manteniamo solo le frecce, se presenti
+        if(key === 'ArrowRight'){
+          $('#next')?.click();
+        }
+        if(key === 'ArrowLeft'){
+          $('#prev')?.click();
+        }
+      }
+    });
+
+    (async function init(){
+      await loadBanksIndex();
+      await showSummaries();
+      save('subject', subjectSelect.value);
+      await previewBankSize();
+    })();
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+
+
+<script>
+  (function(){
+    const BASE_URL = 'https://two7se.onrender.com';
+    const PING_URL = BASE_URL + '/ping';
+    const COUNT_URL = BASE_URL + '/online-count';
+    const COUNT_ID = 'online-count';
+    const DAILY_URL = BASE_URL + '/daily-count';
+    const DAILY_ID = 'daily-count';
+
+    let lastCount = null;
+    let lastDailyCount = null;
+
+    async function sendPresencePing() {
+      try {
+        await fetch(PING_URL, { method: 'POST' });
+      } catch (e) {
+        // errore ignorato
+      }
+    }
+
+    async function refreshOnlineCount() {
+      try {
+        const res = await fetch(COUNT_URL);
+        const data = await res.json();
+        const el = document.getElementById(COUNT_ID);
+        if (!el) return;
+
+        const newCount = Number(data.count);
+
+        if (Number.isNaN(newCount)) {
+          el.textContent = '…';
+          return;
+        }
+
+        if (lastCount !== null && newCount !== lastCount) {
+          el.classList.remove('count-bump');
+          void el.offsetWidth;
+          el.classList.add('count-bump');
+        }
+
+        lastCount = newCount;
+        el.textContent = newCount;
+      } catch (e) {
+        const el = document.getElementById(COUNT_ID);
+        if (!el) return;
+        el.textContent = '…';
+      }
+    }
+
+    
+    async function refreshDailyCount() {
+      try {
+        const res = await fetch(DAILY_URL);
+        const data = await res.json();
+        const el = document.getElementById(DAILY_ID);
+        if (!el) return;
+
+        const newCount = Number(data.count);
+
+        if (Number.isNaN(newCount)) {
+          el.textContent = '…';
+          return;
+        }
+
+        if (lastDailyCount !== null && newCount !== lastDailyCount) {
+          el.classList.remove('count-bump');
+          void el.offsetWidth;
+          el.classList.add('count-bump');
+        }
+
+        lastDailyCount = newCount;
+        el.textContent = newCount;
+      } catch (e) {
+        const el = document.getElementById(DAILY_ID);
+        if (!el) return;
+        el.textContent = '…';
+      }
+    }
+
+function startPresence() {
+      sendPresencePing();
+      refreshOnlineCount();
+      refreshDailyCount();
+      setInterval(() => {
+        sendPresencePing();
+        refreshOnlineCount();
+        refreshDailyCount();
+      }, 5000);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startPresence);
+    } else {
+      startPresence();
+    }
+  })();
+</script>
+
+
+  
+
+<script>
+(function(){
+  const overlay = document.getElementById('end-modal');
+  const btnOk = document.getElementById('end-confirm');
+  const btnNo = document.getElementById('end-cancel');
+  function openEndModal(){ overlay?.classList.remove('hidden'); }
+  function closeEndModal(){ overlay?.classList.add('hidden'); }
+  window.openEndModal = openEndModal;
+  btnNo?.addEventListener('click', closeEndModal);
+  overlay?.addEventListener('click', (e)=>{ if(e.target===overlay) closeEndModal(); });
+  btnOk?.addEventListener('click', ()=>{ closeEndModal(); finishQuiz(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeEndModal(); });
+
+  // Modal conferma avvio simulazione d'esame
+  const examOverlay = document.getElementById('exam-modal');
+  const examBtnOk = document.getElementById('exam-confirm');
+  const examBtnNo = document.getElementById('exam-cancel');
+
+  function openExamModal(){ examOverlay?.classList.remove('hidden'); }
+  function closeExamModal(){ examOverlay?.classList.add('hidden'); }
+  window.openExamModal = openExamModal;
+
+  // Se clicco su "Annulla" torno alla sezione Appunti
+  examBtnNo?.addEventListener('click', ()=>{
+    closeExamModal();
+    document.getElementById('open-summary')?.click();
+  });
+
+  // Chiudo cliccando fuori dal contenuto
+  examOverlay?.addEventListener('click', (e)=>{ if(e.target===examOverlay) closeExamModal(); });
+
+  // Se confermo, avvio la simulazione d'esame
+  examBtnOk?.addEventListener('click', ()=>{
+    // Leggo la preferenza di feedback dalle radio
+    let mode = 'end';
+    const radios = document.querySelectorAll('input[name="exam-feedback"]');
+    radios.forEach(r=>{ if(r.checked) mode = r.value; });
+    EXAM_FEEDBACK_MODE = mode;
+
+    closeExamModal();
+    stopExamTimer();
+    setActiveModeButton('open-quiz-3');
+    startExamMode();
+    AudioFX.click();
+  });
+
+  // ESC chiude anche il popup d'esame
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeExamModal(); });
+
+  // Modal informazioni (tool non ufficiale)
+  function openInfo(){
+    const modal = document.getElementById('infoModal');
+    if(modal){
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden','false');
+    }
+  }
+  function closeInfo(){
+    const modal = document.getElementById('infoModal');
+    if(modal){
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden','true');
+    }
+  }
+  window.openInfo = openInfo;
+  window.closeInfo = closeInfo;
+})();
+</script>
+
+
+<div id="infoModal" class="info-modal-backdrop" aria-hidden="true">
+  <div class="info-modal">
+    <button type="button" class="info-close" onclick="closeInfo()" aria-label="Chiudi informazioni">&times;</button>
+    <section class="updates">
+      <h2>Informazioni</h2>
+      <p>
+        Questa applicazione è uno strumento di studio <strong>non ufficiale</strong>, pensato per aiutarti a ripassare e ad
+        allenarti con domande sulle materie del <strong>27° Corso Sergenti Antares II</strong>.
+      </p>
+      <ul class="updates-list">
+        <li>
+          <span class="update-text">
+            I quiz sono stati creati e/o adattati anche con il supporto di strumenti di <strong>intelligenza artificiale</strong>.
+            Possono contenere semplificazioni o imprecisioni e non sostituiscono il materiale ufficiale dell&#39;Aeronautica Militare.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            Non troverai <strong>banche dati ufficiali</strong> o domande d&#39;esame reali, ma solo quesiti pensati come supporto allo studio.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            Gli appunti e i riassunti presenti nella sezione <em>Appunti</em> vengono aggiornati e ampliati nel tempo in base al materiale disponibile.
+          </span>
+        </li>
+
+        <li>
+          <span class="update-text">
+            L&#39;app è pensata esclusivamente per l&#39;uso interno e per finalità di studio personale;
+            ogni utilizzo improprio o condivisione non autorizzata è da evitare.
+          </span>
+        </li>
+        <li>
+          <span class="update-text">
+            In caso di differenze o dubbi, fanno sempre fede <strong>i testi ufficiali, le direttive e le indicazioni di istruttori e comandanti</strong>.
+          </span>
+        </li>
+      </ul>
+      <p style="margin-top:10px;">
+        Usa questa app come uno <strong>strumento di supporto</strong> per organizzare lo studio e ripassare in autonomia.
+      </p>
+    </section>
+  </div>
+</div>
+
+<div id="result-modal" class="result-modal hidden">
+  <div class="result-modal-backdrop"></div>
+  <div class="result-modal-panel">
+    <div class="result-modal-icon" id="result-modal-icon">🎉</div>
+    <h2 class="result-modal-title" id="result-modal-title">Idoneo</h2>
+    <p class="result-modal-text" id="result-modal-text"></p>
+    <button class="result-modal-close" id="result-modal-close">Chiudi</button>
+  </div>
+</div>
+
+
+<script>
+  (function(){
+    const splash = document.getElementById('app-splash');
+    if(!splash) return;
+
+    function hideSplash(){
+      splash.classList.add('is-hidden');
+      setTimeout(function(){
+        if (splash.parentNode) {
+          splash.parentNode.removeChild(splash);
+        }
+      }, 500);
+    }
+
+    // Quando tutta la pagina è caricata tolgo lo splash
+    window.addEventListener('load', function(){
+      // piccolo delay per dare l'idea di caricamento "vero"
+      setTimeout(hideSplash, 1100);
+    });
+  })();
+</script>
+
+
+</body>
+</html>
